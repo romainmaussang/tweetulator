@@ -7,9 +7,9 @@ block content
   hr
   | Définir le nombre de bots
 
-  form
+  form(action="/simulation/start")
 
-    select
+    select(name="select")
       option(value="50") 50
       option(value="100") 100
       option(value="250") 250
@@ -36,7 +36,7 @@ block content
         option(value="25") 25
         option(value="30") 30
         option(value="50") 50
-
-
+    br
+    button(value="Valider" type="submit")
 
 
