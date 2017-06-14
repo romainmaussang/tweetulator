@@ -20,25 +20,21 @@ module.exports
     }
 
     exports.BotSuiveur = function(name){
-        Bot.call(this, name, 0.2, 0.2, 0.8, 1, 0.4, 0.8, 0.8, 0.2, 0.05, 0.1 );
-        listeBots.push(this);
+        var bot = new Bot(name, 0.2, 0.2, 0.8, 1, 0.4, 0.8, 0.8, 0.2, 0.05, 0.1 );
+        listeBots.push(bot);
         //console.log(this);
     };
-
 
     exports.BotLeader = function(name){
-        Bot.call(this, name, 0.2, 0.8, 0.4, 2, 0.6, 0.4, 0.4, 0.8, 0.8, 0.2 );
-        listeBots.push(this);
+        var bot = new Bot(name, 0.2, 0.8, 0.4, 2, 0.6, 0.4, 0.4, 0.8, 0.8, 0.2 );
+        listeBots.push(bot);
         //console.log(this);
     };
 
-
-    function BotVoyageur() {
-        Bot.call(this, 0.8, 0.6, 0.4, 5, 0.4, 0.4, 0.4, 0.8, 0.15, 0.8 );
+    /*function BotVoyageur() {
+        new Bot(this, 0.8, 0.6, 0.4, 5, 0.4, 0.4, 0.4, 0.8, 0.15, 0.8 );
         //console.log(this);
-    }
-    BotVoyageur.prototype = Object.create(Bot.prototype);
-    BotVoyageur.prototype.constructor = BotVoyageur;
+    }*/
 
 
     // Ajout de méthode

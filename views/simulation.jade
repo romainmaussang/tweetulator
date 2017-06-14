@@ -3,4 +3,7 @@ extends layout
 block content
     center
         h1= title
-        h2 #{nbBots}
+        h2 #{listeBots}
+
+        each kw in listeBots
+            li= kw.nom
