@@ -10,4 +10,5 @@ router.get('/', function(req, res, next) {
 router.get('/stats', function(req, res, next) {
     res.render('stats', { title: 'Tweetulator' });
 });
+
 module.exports = router;

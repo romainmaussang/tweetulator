@@ -1,3 +1,41 @@
-function start () {
+var express = require('express');
+var router = express.Router();
+
+var bot = require('../models/bot.js');
+
+/* GET simulation page. */
+router.get('/', function(req, res) {
+    var leader = req.query.leader,
+        nbBots = req.query.select;
+
+    start(leader,nbBots);
+    res.render('simulation', { title: 'Tweetulator - Simulation' , leader: leader, nbBots: nbBots });
+});
+
+module.exports = router;
+
+function start(leader, nbBots) {
+
+    // Calcul des pourcentages
+    var nbLeader = parseInt((nbBots * leader)/100);
+    var nbSuiveur = parseInt((nbBots * (100-leader))/100);
+
+    console.log('nbLeader : ' + nbLeader);
+    console.log('nbSuiveur: ' + nbSuiveur);
+
+    // Initialisation bots
+    var compt = 1;
+    var compteur = 1;
+    for (var i = 0; i < nbLeader; i++) {
+        var name = "BOT_Leader_"+ compt;
+        compt = compt+1;
+        bot.BotLeader(name);
+    }
+    for (var i2 = 0; i2 < nbSuiveur; i2++) {
+        var name2 = "BOT_Suiveur_" + compteur;
+        compteur = compteur + 1;
+        bot.BotSuiveur(name2);
+    }
+    console.log(bot.listeBots);
 
 }

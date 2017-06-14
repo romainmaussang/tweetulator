@@ -1,9 +1,12 @@
 //var log = require('log.js');
 module.exports
 {
+    var listeBots = [];
+    exports.listeBots = listeBots;
 
     // Constructeur
-    function Bot (probavoyager, probatweet, probaretweet, nbhashtag, probalien, probalike, probamention, probaselfmention, visibilite,probaphoto) {
+    function Bot (nom, probavoyager, probatweet, probaretweet, nbhashtag, probalien, probalike, probamention, probaselfmention, visibilite,probaphoto) {
+        this.nom = nom;
         this.probavoyager = probavoyager;
         this.probatweet = probatweet;
         this.probaretweet =probaretweet;
@@ -16,25 +19,23 @@ module.exports
         this.probaphoto = probaphoto;
     }
 
-    function BotSuiveur() {
-        Bot.call(this, 0.2, 0.2, 0.8, 1, 0.4, 0.8, 0.8, 0.2, 0.05, 0.1 );
-        console.log(this);
-    }
-    BotSuiveur.prototype = Object.create(Bot.prototype);
-    BotSuiveur.prototype.constructor = BotSuiveur;
+    exports.BotSuiveur = function(name){
+        Bot.call(this, name, 0.2, 0.2, 0.8, 1, 0.4, 0.8, 0.8, 0.2, 0.05, 0.1 );
+        listeBots.push(this);
+        //console.log(this);
+    };
 
 
-    function BotLeader() {
-        Bot.call(this, 0.2, 0.8, 0.4, 2, 0.6, 0.4, 0.4, 0.8, 0.8, 0.2 );
-        console.log(this);
-    }
-    BotLeader.prototype = Object.create(Bot.prototype);
-    BotLeader.prototype.constructor = BotLeader;
+    exports.BotLeader = function(name){
+        Bot.call(this, name, 0.2, 0.8, 0.4, 2, 0.6, 0.4, 0.4, 0.8, 0.8, 0.2 );
+        listeBots.push(this);
+        //console.log(this);
+    };
 
 
     function BotVoyageur() {
         Bot.call(this, 0.8, 0.6, 0.4, 5, 0.4, 0.4, 0.4, 0.8, 0.15, 0.8 );
-        console.log(this);
+        //console.log(this);
     }
     BotVoyageur.prototype = Object.create(Bot.prototype);
     BotVoyageur.prototype.constructor = BotVoyageur;
@@ -61,9 +62,8 @@ module.exports
 
     Bot.prototype.constructor = Bot;
 
-    var bot1 = new BotLeader();
-    var bot2 = new BotSuiveur();
-    var bot3 = new BotVoyageur();
-//bite
-    console.log(bot1,bot2,bot3);
+    //var bot1 = new BotLeader();
+    //var bot2 = new BotSuiveur();
+    //var bot3 = new BotVoyageur();
+    //console.log(bot1,bot2,bot3);
 }

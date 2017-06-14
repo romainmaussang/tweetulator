@@ -7,7 +7,7 @@ block content
   hr
   | Définir le nombre de bots
 
-  form(action="/simulation/start")
+  form(action='/simulation' , method='get')
 
     select(name="select")
       option(value="50") 50
@@ -18,32 +18,18 @@ block content
       option(value="5000") 5000
     br
     p
-    | Définir le pourcentage de bots de type Leader
+    | Définir le pourcentage de bots de type Leader/Suiveur
     br
     select(name="leader")
-      option(value="5") 5
-      option(value="10") 10
-      option(value="25") 25
-      option(value="30") 30
-      option(value="50") 50
+      option(value="5") 5/95
+      option(value="10") 10/90
+      option(value="25") 25/75
+      option(value="30") 30/70
+      option(value="50") 50/50
 
     p
-    | Définir le pourcentage de bots de type Suiveur
-    br
-    select(name="suiveur")
-        option(value="5") 5
-        option(value="10") 10
-        option(value="25") 25
-        option(value="30") 30
-        option(value="50") 50
     br
     button(value="Valider" type="submit")
-        option(value="70") 70
-        option(value="75") 75
-        option(value="90") 90
-        option(value="95") 95
-    br
-    button(formmethod='GET', value="Valider" name="valider")
 
 
 
