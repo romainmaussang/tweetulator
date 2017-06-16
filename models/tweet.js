@@ -2,8 +2,11 @@ var log = require('log.js');
 module.exports
 {
 
+    var listeTweets = new array();
+
     // Constructeur
     function Tweet () {
+        this.auteur
         this.sentiment
         this.nbhashtag
         this.nbmention
@@ -14,27 +17,20 @@ module.exports
         this.nblien
         this.isretweet
         this.retweetedid
+        this.likedBy = new array()
     }
 
+    Tweet.prototype.constructeur = Tweet;
 
-    // Ajout de méthode
     Tweet.prototype = {
-        lireTweets: function () {
-            // Récupérer Tweets dans les logs
+        getTweets: function () {
+            return listeTweets;
         },
-
-        publieTweet: function () {
-            // Ajouter un tweet
-
-            // Ajouter un log
+        getAuteur: function() {
+            return this.auteur;
         },
-
-        retweet: function () {
-            // Ajouter un tweet
-
-            // Ajouter un log
+        addLike: function (botName) {
+            this.likedBy.push(botName);
         }
-    };
-
-    Bot.prototype.constructeur = Bot;
+    }
 };

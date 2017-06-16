@@ -1,4 +1,5 @@
-//var log = require('log.js');
+var log = require('log.js');
+
 module.exports
 {
     var listeBots = [];
@@ -39,8 +40,21 @@ module.exports
 
     // Ajout de méthode
         Bot.prototype = {
+            chooseAction : function () {
+              var nb = Math.random()*100;
+              if(lireTweets() == false)   {
+                  publieTweet();
+              } else {
+                  var tweets = lireTweets();
+              }
+              if(nb < 1) {
+
+              }
+            },
             lireTweets: function () {
                 // Récupérer Tweets dans les logs
+                var tweets = log.getTweets();
+                return tweets;
             },
 
             publieTweet: function () {
@@ -53,6 +67,35 @@ module.exports
                 // Ajouter un tweet
 
                 // Ajouter un log
+            },
+            // Fonction qui détermine si on like un tweet ou non
+            likeTweet: function(tweets) {
+
+                var tweetsLeader = new array();
+                var tweetsSuiveur = new array();
+
+                // On parcours les tweets pour les classer par type d'auteur
+                for(var i = 0 ; i < tweets.length ; i++) {
+                    // On classe les tweets par auteur (LEADER ou SUIVEUR)
+                    if(tweets[i].getAuteur().contains("LEADER")) {
+                        tweetsLeader.push(tweets[i]);
+                    } else {
+                        tweetsSuiveur.push(tweets[i]);
+                    }
+                }
+                // On détermine le coeff de like
+                var coeff = Math.round((Math.random()*100)); // donne un nombre entre 0 et 9
+                var tweetToLike = 0;
+
+                if(coeff < 1) {
+                    tweetToLike = getRandomInt(0,tweetsSuiveur.length());
+                    // On ajoute un like au tweet
+                    tweetsSuiveur[tweetToLike].addLike(this.nom);
+                } else {
+                    tweetToLike = getRandomInt(0,tweetsLeader.length());
+                    // On ajoute un like au tweet
+                    tweetsLeader[tweetToLike].addLike(this.nom);
+                }
             }
         };
 
@@ -62,4 +105,8 @@ module.exports
     //var bot2 = new BotSuiveur();
     //var bot3 = new BotVoyageur();
     //console.log(bot1,bot2,bot3);
+}
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }

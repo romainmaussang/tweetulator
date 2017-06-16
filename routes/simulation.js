@@ -42,3 +42,9 @@ function start(leader, nbBots) {
     //console.log(bot.listeBots);
     return bot.listeBots;
 }
+
+function simulate(listeBots) {
+    for( var i = 0 ; i<listeBots.length ; i++ ) {
+        listeBots[i].chooseAction();
+    }
+}
