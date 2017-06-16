@@ -44,6 +44,7 @@ function start(leader, nbBots) {
 }
 
 function simulate(listeBots) {
+    //TODO ajouter une condition d'arrêt
     for( var i = 0 ; i<listeBots.length ; i++ ) {
         listeBots[i].chooseAction();
     }

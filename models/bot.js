@@ -1,4 +1,4 @@
-var log = require('log.js');
+var log = require('./log.js');
 
 module.exports
 {
@@ -48,7 +48,7 @@ module.exports
                   var tweets = lireTweets();
               }
               if(nb < 1) {
-
+                //TODO
               }
             },
             lireTweets: function () {
@@ -56,13 +56,13 @@ module.exports
                 var tweets = log.getTweets();
                 return tweets;
             },
-
+            //TODO
             publieTweet: function () {
                 // Ajouter un tweet
 
                 // Ajouter un log
             },
-
+            //TODO
             retweet: function () {
                 // Ajouter un tweet
 
@@ -71,8 +71,8 @@ module.exports
             // Fonction qui détermine si on like un tweet ou non
             likeTweet: function(tweets) {
 
-                var tweetsLeader = new array();
-                var tweetsSuiveur = new array();
+                var tweetsLeader = new Array();
+                var tweetsSuiveur = new Array();
 
                 // On parcours les tweets pour les classer par type d'auteur
                 for(var i = 0 ; i < tweets.length ; i++) {
@@ -87,6 +87,7 @@ module.exports
                 var coeff = Math.round((Math.random()*100)); // donne un nombre entre 0 et 9
                 var tweetToLike = 0;
 
+                // Si < 1 >>> on like un Suiveur sinon on like un Leader
                 if(coeff < 1) {
                     tweetToLike = getRandomInt(0,tweetsSuiveur.length());
                     // On ajoute un like au tweet
