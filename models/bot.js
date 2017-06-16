@@ -120,7 +120,7 @@ module.exports
                 var mentions = new Array();
                 listeTweets.get(tw).getMentionne(mentions);
                 // Ajouter un tweet
-                listeTweets.push(new Tweet (listeTweets.get(tw).getAuteur(),listeTweets.get(tw).getNbhashtag(), listeTweets.get(tw).getPhoto(), listeTweets.length() ,listeTweets.get(tw).getNblien(), true, listeTweets.get(tw).getId(),  mentions ));
+                listeTweets.push(new Tweet (listeTweets.get(tw).getAuteur(),listeTweets.get(tw).getNbhashtag(),listeTweets.get(tw).getNbmention(), listeTweets.get(tw).getPhoto(), listeTweets.length() ,listeTweets.get(tw).getNblien(), true, listeTweets.get(tw).getId(),  mentions ));
                 // Ajouter un log
                 var d = new Date();
                 var hour = d.getHours()+"h"+d.getMinutes();
