@@ -1,33 +1,35 @@
 var log = require('./log.js');
+var tweet = require('tweet.js');
 
 module.exports
 {
     var listeBots = [];
     exports.listeBots = listeBots;
 
+
     // Constructeur
-    function Bot (nom, probavoyager, probatweet, probaretweet, nbhashtag, probalien, probalike, probamention, probaselfmention, visibilite,probaphoto) {
+    function Bot (nom, probavoyager, probatweet, probaretweet, nbhashtag, probalien, probalike, probamention, probamentionned, visibilite,probaphoto) {
         this.nom = nom;
         this.probavoyager = probavoyager;
         this.probatweet = probatweet;
         this.probaretweet =probaretweet;
-        this.nbhashtag = nbhashtag;
+        this.nbhashtagpossible = nbhashtag;
         this.probalien = probalien;
         this.probalike = probalike;
         this.probamention = probamention;
-        this.probaselfmention = probaselfmention;
+        this.probamentionned = probamentionned;
         this.visibilite = visibilite;
         this.probaphoto = probaphoto;
     }
 
     exports.BotSuiveur = function(name){
-        var bot = new Bot(name, 0.2, 0.2, 0.8, 1, 0.4, 0.8, 0.8, 0.2, 0.05, 0.1 );
+        var bot = new Bot(name, 0.2, 0.2, 0.8, 2, 0.4, 0.8, 0.8, 0.2, 0.05, 0.1 );
         listeBots.push(bot);
         //console.log(this);
     };
 
     exports.BotLeader = function(name){
-        var bot = new Bot(name, 0.2, 0.8, 0.4, 2, 0.6, 0.4, 0.4, 0.8, 0.8, 0.2 );
+        var bot = new Bot(name, 0.2, 0.8, 0.4, 4, 0.6, 0.4, 0.4, 0.8, 0.8, 0.2 );
         listeBots.push(bot);
         //console.log(this);
     };
@@ -43,12 +45,12 @@ module.exports
             chooseAction : function () {
               var nb = Math.random()*100;
               if(lireTweets() == false)   {
-                  publieTweet();
+                  this.publieTweet();
               } else {
                   var tweets = lireTweets();
               }
               if(nb < 1) {
-                //TODO
+
               }
             },
             lireTweets: function () {
@@ -56,13 +58,48 @@ module.exports
                 var tweets = log.getTweets();
                 return tweets;
             },
-            //TODO
-            publieTweet: function () {
-                // Ajouter un tweet
 
+            publieTweet: function () {
+                //on détermine le nombre de hashtags
+                var nbhashtag = getRandomInt(0, this.nbhashtagpossible);
+                // on détermine le nombre de mentions ainsi que les bots mentionnés
+                var nbmentionned = 0;
+                var testproba = Math.random();
+                while (testproba < this.probamention){
+                    nbmentionned++;
+                    testproba = Math.random();
+                }
+                var botsmentionned = new array();
+                while (nbmentionned >0 ) {
+
+                   var numbottested = getRandomInt(0, listeBots.length-1);
+                   if ( Math.random() < listeBots.get(numbottested).probamentionned){
+                       botsmentionned.push(listeBots.get(numbottested).name);
+                       nbmentionned--;
+                   }
+                }
+                //on détermine si le tweet comportera une photo
+                var photo = false;
+                if (Math.Random < this.probaphoto){
+                    photo = true;
+                }
+                // on détermine le nombre de liens
+                var testprobalien = Math.random();
+                var nblien = 0;
+                while (testprobalien < this.probalien) {
+                    nblien++;
+                    testprobalien = Math.random();
+                }
+
+                // Ajouter un tweet
+                listeTweets.push(new Tweet(this.name, nbhashtag, botsmentionned.count(), photo, listeTweets.count(), nblien, false, null,  botsmentionned));
                 // Ajouter un log
+                var d = new Date();
+                var hour = d.getHours()+"h"+d.getMinutes();
+                log.ajouterLog(this.name, hour, listeTweets.get(listeTweets.length-1), "a tweeté" )
+
             },
-            //TODO
+
             retweet: function () {
                 // Ajouter un tweet
 
@@ -71,8 +108,8 @@ module.exports
             // Fonction qui détermine si on like un tweet ou non
             likeTweet: function(tweets) {
 
-                var tweetsLeader = new Array();
-                var tweetsSuiveur = new Array();
+                var tweetsLeader = new array();
+                var tweetsSuiveur = new array();
 
                 // On parcours les tweets pour les classer par type d'auteur
                 for(var i = 0 ; i < tweets.length ; i++) {
@@ -87,7 +124,6 @@ module.exports
                 var coeff = Math.round((Math.random()*100)); // donne un nombre entre 0 et 9
                 var tweetToLike = 0;
 
-                // Si < 1 >>> on like un Suiveur sinon on like un Leader
                 if(coeff < 1) {
                     tweetToLike = getRandomInt(0,tweetsSuiveur.length());
                     // On ajoute un like au tweet

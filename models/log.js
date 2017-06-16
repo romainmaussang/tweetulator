@@ -11,8 +11,8 @@ module.exports
     var listeLogs = Array();
 
     Log.prototype = {
-        ajouterLog:function(idBot, heure, contenu, type) {
-            listeLogs.add(heure + " : " + "Bot n°" + idBot + " action: " + type + contenu);
+        ajouterLog:function(botName, heure, contenu, type) {
+            listeLogs.add(heure + " : " + botName + " action: " + type +" "+ contenu);
         }
     }
 
