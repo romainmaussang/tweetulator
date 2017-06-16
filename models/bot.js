@@ -1,5 +1,5 @@
 var log = require('./log.js');
-var tweet = require('tweet.js');
+var tweet = require('./tweet.js');
 
 module.exports
 {
@@ -8,7 +8,7 @@ module.exports
 
 
     // Constructeur
-    function Bot (nom, probavoyager, probatweet, probaretweet, nbhashtag, probalien, probalike, probamention, probamentionned, visibilite,probaphoto) {
+    function Bot (nom, probavoyager, probatweet, probaretweet, nbhashtag, probalien, probalike, probamention, probamentionned, visibilite ,probaphoto) {
         this.nom = nom;
         this.probavoyager = probavoyager;
         this.probatweet = probatweet;
@@ -92,7 +92,7 @@ module.exports
                 }
 
                 // Ajouter un tweet
-                listeTweets.push(new Tweet(this.name, nbhashtag, botsmentionned.count(), photo, listeTweets.count(), nblien, false, null,  botsmentionned));
+                listeTweets.push(new Tweet(this.name, nbhashtag, botsmentionned.length(), photo, listeTweets.length(), nblien, false, null,  botsmentionned));
                 // Ajouter un log
                 var d = new Date();
                 var hour = d.getHours()+"h"+d.getMinutes();
@@ -101,15 +101,36 @@ module.exports
             },
 
             retweet: function () {
-                // Ajouter un tweet
+                // on détermine le tweet à retweet
+                var hasfoundtweet = false;
+                while (hasfoundtweet == false){
+                    var potentialtweet = getRandomInt(0, listeTweets.length()-1);
+                    if (listeTweets.get(potentialtweet).getAuteur().contains("LEADER")){
+                        if (Math.random() < 0.8){
+                            hasfoundtweet = true;
+                        }
+                    } else {
+                        if (Math.random() < 0.05){
+                            hasfoundtweet = true;
+                        }
+                    }
 
+                }
+                var tw = potentialtweet;
+                var mentions = new Array();
+                listeTweets.get(tw).getMentionne(mentions);
+                // Ajouter un tweet
+                listeTweets.push(new Tweet (listeTweets.get(tw).getAuteur(),listeTweets.get(tw).getNbhashtag(), listeTweets.get(tw).getPhoto(), listeTweets.length() ,listeTweets.get(tw).getNblien(), true, listeTweets.get(tw).getId(),  mentions ));
                 // Ajouter un log
+                var d = new Date();
+                var hour = d.getHours()+"h"+d.getMinutes();
+                log.ajouterLog(this.name, hour, listeTweets.get(listeTweets.length-1), "a retweeté" )
             },
             // Fonction qui détermine si on like un tweet ou non
             likeTweet: function(tweets) {
 
-                var tweetsLeader = new array();
-                var tweetsSuiveur = new array();
+                var tweetsLeader = new Array();
+                var tweetsSuiveur = new Array();
 
                 // On parcours les tweets pour les classer par type d'auteur
                 for(var i = 0 ; i < tweets.length ; i++) {
