@@ -5,7 +5,7 @@ module.exports
 {
     var listeBots = [];
     exports.listeBots = listeBots;
-    var listeTweets = new Array();
+    //var listeTweets = new Array();
 
 
     // Constructeur
