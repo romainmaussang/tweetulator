@@ -9,12 +9,12 @@ module.exports
 
 
     // Constructeur
-    function Bot (nom, probafollow,
-                  probatweet, probaretweet, nbhashtag,
-                  probalien, probalike, probamention,
+    function Bot (nom, probafollow, probaunfollow, probatweet, probaretweet,
+                  nbhashtag, probalien, probalike, probamention,
                   probamentionned, visibilite ,probaphoto) {
         this.nom = nom;
         this.probafollow = probafollow;
+        this.probaunfollow = probaunfollow;
         this.probatweet = probatweet;
         this.probaretweet =probaretweet;
         this.nbhashtagpossible = nbhashtag;
@@ -31,13 +31,12 @@ module.exports
     }
 
     exports.BotSuiveur = function(name){
-        var bot = new Bot(name, 0.2, 0.1, 0.35, 2, 0.4, 0.35, 0.8, 0.2, 0.05, 0.1 );
+        var bot = new Bot(name, 0.2, 0.05, 0.1, 0.30, 2, 0.4, 0.35, 0.8, 0.2, 0.05, 0.1 );
         listeBots.push(bot);
-        //console.log(this);
     };
 
     exports.BotLeader = function(name){
-        var bot = new Bot(name, 0.05, 0.6, 0.2, 4, 0.6, 0.15, 0.4, 0.8, 0.8, 0.2 );
+        var bot = new Bot(name, 0.05, 0.05, 0.6, 0.15, 4, 0.6, 0.15, 0.4, 0.8, 0.8, 0.2 );
         listeBots.push(bot);
     };
 
@@ -187,7 +186,7 @@ module.exports
             follow : function () {
                 var hasFollowed = false;
                 while (hasFollowed === false){
-                    var botToFollow = getRandomInt(0, listeBots.length);
+                    var botToFollow = getRandomInt(0, listeBots.length-1);
                     if(Math.random() < listeBots.get(botToFollow).getVisibilite()){
                         var alreadyFollowed = containsObject(listeBots[botToFollow],this.isFollowing);
                         if(alreadyFollowed === false){
@@ -198,6 +197,11 @@ module.exports
                         }
                     }
                 }
+            },
+            
+            unfollow :function () {
+                var botToUnfollow = getRandomInt(0, this.isFollowing.length-1);
+                this.isFollowing.splice(botToUnfollow,1);
             }
         };
 
