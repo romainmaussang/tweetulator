@@ -5,12 +5,16 @@ module.exports
 {
     var listeBots = [];
     exports.listeBots = listeBots;
+    var listeTweets = new Array();
 
 
     // Constructeur
-    function Bot (nom, probavoyager, probatweet, probaretweet, nbhashtag, probalien, probalike, probamention, probamentionned, visibilite ,probaphoto) {
+    function Bot (nom, probafollow,
+                  probatweet, probaretweet, nbhashtag,
+                  probalien, probalike, probamention,
+                  probamentionned, visibilite ,probaphoto) {
         this.nom = nom;
-        this.probavoyager = probavoyager;
+        this.probafollow = probafollow;
         this.probatweet = probatweet;
         this.probaretweet =probaretweet;
         this.nbhashtagpossible = nbhashtag;
@@ -20,18 +24,21 @@ module.exports
         this.probamentionned = probamentionned;
         this.visibilite = visibilite;
         this.probaphoto = probaphoto;
+        this.mentionnedby = new Array();
+        this.followedby = new Array();
+        this.isFollowing = new Array();
+
     }
 
     exports.BotSuiveur = function(name){
-        var bot = new Bot(name, 0.2, 0.2, 0.8, 2, 0.4, 0.8, 0.8, 0.2, 0.05, 0.1 );
+        var bot = new Bot(name, 0.2, 0.1, 0.35, 2, 0.4, 0.35, 0.8, 0.2, 0.05, 0.1 );
         listeBots.push(bot);
         //console.log(this);
     };
 
     exports.BotLeader = function(name){
-        var bot = new Bot(name, 0.2, 0.8, 0.4, 4, 0.6, 0.4, 0.4, 0.8, 0.8, 0.2 );
+        var bot = new Bot(name, 0.05, 0.6, 0.2, 4, 0.6, 0.15, 0.4, 0.8, 0.8, 0.2 );
         listeBots.push(bot);
-        //console.log(this);
     };
 
     /*function BotVoyageur() {
@@ -42,9 +49,26 @@ module.exports
 
     // Ajout de méthode
         Bot.prototype = {
+
+            getMentionnedby : function (bot) {
+                this.mentionnedby().push(bot);
+            },
+
+            getFollowedby : function (bot) {
+                this.followedby().push(bot);
+            },
+
+            getProbamentionned : function () {
+                return this.probamentionned;
+            },
+
+            getVisibilite : function () {
+              return this.visibilite;
+            },
+
             chooseAction : function () {
               var nb = Math.random()*100;
-              if(lireTweets() == false)   {
+              if(lireTweets() === false)   {
                   this.publieTweet();
               } else {
                   var tweets = lireTweets();
@@ -59,6 +83,9 @@ module.exports
                 return tweets;
             },
 
+
+
+
             publieTweet: function () {
                 //on détermine le nombre de hashtags
                 var nbhashtag = getRandomInt(0, this.nbhashtagpossible);
@@ -69,12 +96,12 @@ module.exports
                     nbmentionned++;
                     testproba = Math.random();
                 }
-                var botsmentionned = new array();
+                var botsmentionned = new Array();
                 while (nbmentionned >0 ) {
-
                    var numbottested = getRandomInt(0, listeBots.length-1);
-                   if ( Math.random() < listeBots.get(numbottested).probamentionned){
-                       botsmentionned.push(listeBots.get(numbottested).name);
+                   if ( Math.random() < listeBots[numbottested].getProbamentionned){
+                       botsmentionned.push(listeBots[numbottested].name);
+                       listeBots[numbottested].getMentionnedby(this);
                        nbmentionned--;
                    }
                 }
@@ -92,20 +119,20 @@ module.exports
                 }
 
                 // Ajouter un tweet
-                listeTweets.push(new Tweet(this.name, nbhashtag, botsmentionned.length(), photo, listeTweets.length(), nblien, false, null,  botsmentionned));
+                listeTweets.push(new Tweet(this.name, nbhashtag, botsmentionned.length, photo, listeTweets.length(), nblien, false, null,  botsmentionned));
                 // Ajouter un log
                 var d = new Date();
                 var hour = d.getHours()+"h"+d.getMinutes();
-                log.ajouterLog(this.name, hour, listeTweets.get(listeTweets.length-1), "a tweeté" )
+                log.ajouterLog(this.name, hour, listeTweets[listeTweets.length-1], "a tweeté" )
 
             },
 
             retweet: function () {
                 // on détermine le tweet à retweet
                 var hasfoundtweet = false;
-                while (hasfoundtweet == false){
-                    var potentialtweet = getRandomInt(0, listeTweets.length()-1);
-                    if (listeTweets.get(potentialtweet).getAuteur().contains("LEADER")){
+                while (hasfoundtweet === false){
+                    var potentialTweet = getRandomInt(0, listeTweets.length-1);
+                    if (listeTweets[potentialTweet].getAuteur().contains("LEADER")){
                         if (Math.random() < 0.8){
                             hasfoundtweet = true;
                         }
@@ -116,15 +143,15 @@ module.exports
                     }
 
                 }
-                var tw = potentialtweet;
+                var tw = potentialTweet;
                 var mentions = new Array();
-                listeTweets.get(tw).getMentionne(mentions);
+                listeTweets[tw].getMentionne(mentions);
                 // Ajouter un tweet
-                listeTweets.push(new Tweet (listeTweets.get(tw).getAuteur(),listeTweets.get(tw).getNbhashtag(),listeTweets.get(tw).getNbmention(), listeTweets.get(tw).getPhoto(), listeTweets.length() ,listeTweets.get(tw).getNblien(), true, listeTweets.get(tw).getId(),  mentions ));
+                listeTweets.push(new Tweet (listeTweets[tw].getAuteur(),listeTweets[tw].getNbhashtag(),listeTweets[tw].getNbmention(), listeTweets[tw].getPhoto(), listeTweets.length() ,listeTweets[tw].getNblien(), true, listeTweets[tw].getId(),  mentions ));
                 // Ajouter un log
                 var d = new Date();
                 var hour = d.getHours()+"h"+d.getMinutes();
-                log.ajouterLog(this.name, hour, listeTweets.get(listeTweets.length-1), "a retweeté" )
+                log.ajouterLog(this.name, hour, listeTweets[listeTweets.length-1], "a retweeté" )
             },
             // Fonction qui détermine si on like un tweet ou non
             likeTweet: function(tweets) {
@@ -146,13 +173,30 @@ module.exports
                 var tweetToLike = 0;
 
                 if(coeff < 1) {
-                    tweetToLike = getRandomInt(0,tweetsSuiveur.length());
+                    tweetToLike = getRandomInt(0,tweetsSuiveur.length);
                     // On ajoute un like au tweet
                     tweetsSuiveur[tweetToLike].addLike(this.nom);
                 } else {
-                    tweetToLike = getRandomInt(0,tweetsLeader.length());
+                    tweetToLike = getRandomInt(0,tweetsLeader.length);
                     // On ajoute un like au tweet
                     tweetsLeader[tweetToLike].addLike(this.nom);
+                }
+                //TO DO ajouter log
+            },
+
+            follow : function () {
+                var hasFollowed = false;
+                while (hasFollowed === false){
+                    var botToFollow = getRandomInt(0, listeBots.length);
+                    if(Math.random() < listeBots.get(botToFollow).getVisibilite()){
+                        var alreadyFollowed = containsObject(listeBots[botToFollow],this.isFollowing);
+                        if(alreadyFollowed === false){
+                            listeBots[botToFollow].getFollowedby(this);
+                            this.isFollowing.push(listeBots[botToFollow]);
+                            hasFollowed = true;
+                            // TO DO ajouter log
+                        }
+                    }
                 }
             }
         };
@@ -167,4 +211,15 @@ module.exports
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function containsObject(obj, list) {
+    var i;
+    for (i = 0; i < list.length; i++) {
+        if (list[i] === obj) {
+            return true;
+        }
+    }
+
+    return false;
 }

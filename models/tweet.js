@@ -1,8 +1,9 @@
-var log = require('log.js');
+var log = require('./log.js');
 module.exports
 {
 
-    var listeTweets = new array();
+    var listeTweets = new Array();
+
 
     // Constructeur
     function Tweet (auteur,nbhashtag,nbmention,photo,id,nblien,isretweet,retweetedid, mentions) {
@@ -17,8 +18,8 @@ module.exports
         this.nblien = nblien;
         this.isretweet = isretweet;
         this.retweetedid = retweetedid;
-        this.likedBy = new array();
-        this.mentionne = new array() ;
+        this.likedBy = new Array();
+        this.mentionne = new Array() ;
 
         for (var i = 0; i< mentions.length; i++){
             this.mentionne.push(mentions.get(i));
@@ -53,7 +54,7 @@ module.exports
             return this.nblien;
         },
         getMentionne : function (arrayOfMentions) {
-            for (var i = 0; i<this.mentionne.length();i++){
+            for (var i = 0; i<this.mentionne.length;i++){
                 arrayOfMentions.push(this.mentionne.get(i));
             }
         }
