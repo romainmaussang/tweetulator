@@ -24,9 +24,9 @@ module.exports
         this.probamentionned = probamentionned;
         this.visibilite = visibilite;
         this.probaphoto = probaphoto;
-        this.mentionnedby = new Array();
-        this.followedby = new Array();
-        this.isFollowing = new Array();
+        this.mentionnedby = [];
+        this.followedby = [];
+        this.isFollowing = [];
 
     }
 
@@ -65,7 +65,7 @@ module.exports
               return this.visibilite;
             },
 
-            chooseAction : function () {
+           /* chooseAction : function () {
               var nb = Math.random()*100;
               if(lireTweets() === false)   {
                   this.publieTweet();
@@ -75,7 +75,38 @@ module.exports
               if(nb < 1) {
 
               }
+            }, */
+
+            // fonction à appeler à chaque boucle de notre programme
+            chooseAction : function () {
+            var chooseStat = Math.random();
+            var stopLoop = false;
+            while (stopLoop === false){
+                if (chooseStat < this.probatweet){
+                    this.publieTweet();
+                    stopLoop = true;
+                } else if(chooseStat > this.probatweet && chooseStat <(this.probatweet+this.probaretweet)){
+                    if(listeTweets.isEmpty() === false){
+                    this.retweet();
+                    stopLoop = true;
+                    }
+                }else if(chooseStat>(this.probatweet+this.probaretweet) && chooseStat <(this.probatweet+this.probaretweet+this.probafollow())) {
+                    this.follow();
+                }else if(chooseStat>(this.probatweet+this.probaretweet+this.probafollow()) && chooseStat < (this.probatweet+this.probaretweet+this.probafollow()+this.probaunfollow)){
+                    if(this.isFollowing.isEmpty() === false){
+                    this.unFollow();
+                    stopLoop = true;
+                    }
+                }else if(chooseStat>(this.probatweet+this.probaretweet+this.probafollow()+this.probaunfollow)){
+                    if(listeTweets.isEmpty() === false){
+                        this.likeTweet(listeTweets);
+                        stopLoop = true;
+                    }
+                }
+                chooseStat = Math.random();
+            }
             },
+
             lireTweets: function () {
                 // Récupérer Tweets dans les logs
                 var tweets = log.getTweets();
@@ -95,7 +126,7 @@ module.exports
                     nbmentionned++;
                     testproba = Math.random();
                 }
-                var botsmentionned = new Array();
+                var botsmentionned = [];
                 while (nbmentionned >0 ) {
                    var numbottested = getRandomInt(0, listeBots.length-1);
                    if ( Math.random() < listeBots[numbottested].getProbamentionned){
@@ -143,7 +174,7 @@ module.exports
 
                 }
                 var tw = potentialTweet;
-                var mentions = new Array();
+                var mentions = [];
                 listeTweets[tw].getMentionne(mentions);
                 // Ajouter un tweet
                 listeTweets.push(new Tweet (listeTweets[tw].getAuteur(),listeTweets[tw].getNbhashtag(),listeTweets[tw].getNbmention(), listeTweets[tw].getPhoto(), listeTweets.length() ,listeTweets[tw].getNblien(), true, listeTweets[tw].getId(),  mentions ));
@@ -155,8 +186,8 @@ module.exports
             // Fonction qui détermine si on like un tweet ou non
             likeTweet: function(tweets) {
 
-                var tweetsLeader = new Array();
-                var tweetsSuiveur = new Array();
+                var tweetsLeader = [];
+                var tweetsSuiveur = [];
 
                 // On parcours les tweets pour les classer par type d'auteur
                 for(var i = 0 ; i < tweets.length ; i++) {
@@ -199,7 +230,7 @@ module.exports
                 }
             },
             
-            unfollow :function () {
+            unFollow :function () {
                 var botToUnfollow = getRandomInt(0, this.isFollowing.length-1);
                 this.isFollowing.splice(botToUnfollow,1);
             }

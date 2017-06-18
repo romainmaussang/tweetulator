@@ -2,7 +2,7 @@ var log = require('./log.js');
 module.exports
 {
 
-    var listeTweets = new Array();
+    var listeTweets = [];
 
 
     // Constructeur
@@ -18,8 +18,8 @@ module.exports
         this.nblien = nblien;
         this.isretweet = isretweet;
         this.retweetedid = retweetedid;
-        this.likedBy = new Array();
-        this.mentionne = new Array() ;
+        this.likedBy = [];
+        this.mentionne = [] ;
 
         for (var i = 0; i< mentions.length; i++){
             this.mentionne.push(mentions.get(i));
