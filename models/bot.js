@@ -149,9 +149,9 @@ module.exports
                 }
 
                 // Ajouter un tweet
-                listeTweets.push(new Tweet(this.name, nbhashtag, botsmentionned.length, photo, listeTweets.length(), nblien, false, null,  botsmentionned));
-                // Ajouter un log
                 var d = new Date();
+                listeTweets.push(new Tweet(this.name, nbhashtag, botsmentionned.length, photo, listeTweets.length(), nblien, false, null,  botsmentionned, (d.getHours()+"h"+d.getMinutes())));
+                // Ajouter un log
                 var hour = d.getHours()+"h"+d.getMinutes();
                 log.ajouterLog(this.name, hour, listeTweets[listeTweets.length-1], "a tweeté" )
 
@@ -177,9 +177,9 @@ module.exports
                 var mentions = [];
                 listeTweets[tw].getMentionne(mentions);
                 // Ajouter un tweet
-                listeTweets.push(new Tweet (listeTweets[tw].getAuteur(),listeTweets[tw].getNbhashtag(),listeTweets[tw].getNbmention(), listeTweets[tw].getPhoto(), listeTweets.length() ,listeTweets[tw].getNblien(), true, listeTweets[tw].getId(),  mentions ));
-                // Ajouter un log
                 var d = new Date();
+                listeTweets.push(new Tweet (listeTweets[tw].getAuteur(),listeTweets[tw].getNbhashtag(),listeTweets[tw].getNbmention(), listeTweets[tw].getPhoto(), listeTweets.length() ,listeTweets[tw].getNblien(), true, listeTweets[tw].getId(),  mentions, (d.getHours()+"h"+d.getMinutes())  ));
+                // Ajouter un log
                 var hour = d.getHours()+"h"+d.getMinutes();
                 log.ajouterLog(this.name, hour, listeTweets[listeTweets.length-1], "a retweeté" )
             },

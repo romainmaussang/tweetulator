@@ -6,18 +6,16 @@ module.exports
 
 
     // Constructeur
-    function Tweet (auteur,nbhashtag,nbmention,photo,id,nblien,isretweet,retweetedid, mentions) {
+    function Tweet (auteur,nbhashtag,nbmention,photo,id,nblien,isretweet,retweetedid, mentions, tweetDate) {
         this.auteur = auteur;
-    //  this.sentiment
         this.nbhashtag= nbhashtag;
         this.nbmention = nbmention;
         this.photo = photo;
         this.id = id;
-    //  this.longitude
-    //  this.latitude
         this.nblien = nblien;
         this.isretweet = isretweet;
         this.retweetedid = retweetedid;
+        this.tweetDate = tweetDate;
         this.likedBy = [];
         this.mentionne = [] ;
 
