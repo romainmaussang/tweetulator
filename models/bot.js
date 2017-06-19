@@ -153,7 +153,7 @@ module.exports
 
                 // Ajouter un log
                 var hour = d.getHours()+"h"+d.getMinutes();
-                log.ajouterLog(this.nom, hour, tweet.listeTweets[tweet.listeTweets.length-1], "a tweeté" )
+                log.ajouterLog(this.nom, hour, "le tweet n°" + tweet.listeTweets[tweet.listeTweets.length-1].getId(), "a tweeté" )
 
             },
 
@@ -200,7 +200,7 @@ module.exports
                 }
                 // Ajouter un log
                 var hour = d.getHours()+"h"+d.getMinutes();
-                log.ajouterLog(this.nom, hour, tweet.listeTweets[tweet.listeTweets.length-1], "a retweeté" )
+                log.ajouterLog(this.nom, hour, "le tweet n°" + tweet.listeTweets[tweet.listeTweets.length-1].getId(), "a retweeté" )
             },
 
             // Fonction qui détermine si on like un tweet ou non
@@ -222,7 +222,7 @@ module.exports
                     }
                     var d = new Date();
                     var hour = d.getHours()+"h"+d.getMinutes();
-                    log.ajouterLog(this.nom, hour, tweet.listeTweets[tweet.listeTweets.length-1], "a like" );
+                    log.ajouterLog(this.nom, hour, "le tweet n°" + tweet.listeTweets[tweet.listeTweets.length-1].getId(), "a like" );
                 }
 
             },
@@ -242,7 +242,7 @@ module.exports
                             // TO DO ajouter log
                             var d = new Date();
                             var hour = d.getHours()+"h"+d.getMinutes();
-                            log.ajouterLog(this.nom, hour, this.isFollowing[this.isFollowing.length-1], "a follow" )
+                            log.ajouterLog(this.nom, hour, this.isFollowing[this.isFollowing.length-1].getNom(), "a follow" )
                         }
                     }
                 }
@@ -255,7 +255,7 @@ module.exports
                 this.isFollowing.splice(botToUnfollow,1);
                 var d = new Date();
                 var hour = d.getHours()+"h"+d.getMinutes();
-                log.ajouterLog(this.nom, hour, botunfollowed, "a unfollow" )
+                log.ajouterLog(this.nom, hour, botunfollowed.getNom(), "a unfollow" )
             }
         };
 
