@@ -136,8 +136,14 @@ module.exports
                 // Ajouter un tweet
                 var d = new Date();
                 // c'est ici que ça merde Romain
-                tweet.listeTweets.push(tweet.Tweet(this.name, nbhashtag, botsmentionned.length, photo, tweet.listeTweets.length, nblien, false, null,  botsmentionned, (d.getHours()+"h"+d.getMinutes())));
-                console.log(tweet.listeTweets[0]);
+                // On créé le tweet et on l'a à la liste des tweets
+                var tweetToAdd = new tweet.Tweet(this.nom,nbhashtag,botsmentionned.length, photo, tweet.listeTweets.length, nblien, false, -1, botsmentionned, (d.getHours()+"h"+d.getMinutes()));
+
+                if("undefined" != typeof tweetToAdd ) {
+                    console.log("is defined : " + tweetToAdd);
+                    tweet.listeTweets.push(tweetToAdd);
+                }
+
                 // Ajouter un log
                 var hour = d.getHours()+"h"+d.getMinutes();
                 log.ajouterLog(this.name, hour, tweet.listeTweets[tweet.listeTweets.length-1], "a tweeté" )
@@ -149,10 +155,9 @@ module.exports
                 // on détermine le tweet à retweet
                 var hasfoundtweet = false;
                 while (hasfoundtweet === false){
-                    var potentialTweet = getRandomInt(0, tweet.listeTweets.length-1);
-                    console.log(potentialTweet);
-                    console.log(tweet.listeTweets);
-                    if (tweet.listeTweets[potentialTweet].getAuteur().contains("LEADER")){
+                    var potentialTweet = getRandomInt(0, (tweet.getTweets().length)-2);
+
+                    if (tweet.listeTweets[potentialTweet].getAuteur().search("Leader")){
                         if (Math.random() < 0.8){
                             hasfoundtweet = true;
                         }
@@ -168,7 +173,24 @@ module.exports
                 tweet.listeTweets[tw].getMentionne(mentions);
                 // Ajouter un tweet
                 var d = new Date();
-                tweet.listeTweets.push(tweet.Tweet (tweet.listeTweets[tw].getAuteur(),tweet.listeTweets[tw].getNbhashtag(),tweet.listeTweets[tw].getNbmention(), tweet.listeTweets[tw].getPhoto(), tweet.listeTweets.length() ,tweet.listeTweets[tw].getNblien(), true, tweet.listeTweets[tw].getId(),  mentions, (d.getHours()+"h"+d.getMinutes())  ));
+
+                // On créé le tweet
+                var tweetToAdd = new tweet.Tweet(tweet.listeTweets[tw].getAuteur(),
+                                                    tweet.listeTweets[tw].getNbhashtag(),
+                                                    tweet.listeTweets[tw].getNbmention(),
+                                                    tweet.listeTweets[tw].getPhoto(),
+                                                    tweet.listeTweets.length,
+                                                    tweet.listeTweets[tw].getNblien(),
+                                                    true,
+                                                    tweet.listeTweets[tw].getId(),
+                                                    mentions,
+                                                    (d.getHours()+"h"+d.getMinutes()));
+
+                // On vérifie que le tweet a été créé
+                if("undefined" != typeof tweetToAdd ) {
+                    console.log("is defined : " + tweetToAdd);
+                    tweet.listeTweets.push(tweetToAdd);
+                }
                 // Ajouter un log
                 var hour = d.getHours()+"h"+d.getMinutes();
                 log.ajouterLog(this.name, hour, tweet.listeTweets[tweet.listeTweets.length-1], "a retweeté" )
@@ -230,11 +252,6 @@ module.exports
         };
 
     Bot.prototype.constructor = Bot;
-
-    //var bot1 = new BotLeader();
-    //var bot2 = new BotSuiveur();
-    //var bot3 = new BotVoyageur();
-    //console.log(bot1,bot2,bot3);
 }
 
 function getRandomInt(min, max) {

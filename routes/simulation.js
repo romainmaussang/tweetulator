@@ -40,17 +40,15 @@ function start(leader, nbBots) {
     var compteur = 1;
     for (var i = 0; i < nbLeader; i++) {
         name = "BOT_Leader_"+ compt;
-        //console.log(name);
         compt = compt+1;
         bot.BotLeader(name);
     }
     for (var i2 = 0; i2 < nbSuiveur; i2++) {
         name2 = "BOT_Suiveur_" + compteur;
-        //console.log(name2);
         compteur = compteur + 1;
         bot.BotSuiveur(name2);
     }
-    //console.log(bot.listeBots);
+
     return bot.listeBots;
 }
 
@@ -59,7 +57,7 @@ function simulate(listeBots, nbTours) {
         console.log("Tour : " + w);
             for (var i = 0; i < listeBots.length; i++) {
                 console.log("nb bots : " + listeBots.length);
-                console.log("Bot n° : " + i);
+                console.log("Tour : " + w + " Bot : " + i);
                 listeBots[i].chooseAction();
             }
     }

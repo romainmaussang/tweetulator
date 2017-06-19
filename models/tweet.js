@@ -3,9 +3,9 @@ var bot = require ('./bot.js');
 module.exports
 {
 
-    var listeTweets = [];
+    var listeTweets = new Array();
     exports.listeTweets = listeTweets;
-    exports.Tweet = Tweet;
+
 
     // Constructeur
     function Tweet (auteur,nbhashtag,nbmention,photo,id,nblien,isretweet,retweetedid, mentions, tweetDate) {
@@ -26,12 +26,15 @@ module.exports
         }
     }
 
+
     Tweet.prototype.constructeur = Tweet;
+    exports.Tweet = Tweet;
+
+    exports.getTweets = function() {
+        return listeTweets;
+    }
 
     Tweet.prototype = {
-        getTweets: function () {
-            return listeTweets;
-        },
         getAuteur: function() {
             return this.auteur;
         },
@@ -55,7 +58,7 @@ module.exports
         },
         getMentionne : function (arrayOfMentions) {
             for (var i = 0; i<this.mentionne.length;i++){
-                arrayOfMentions.push(this.mentionne.get(i));
+                arrayOfMentions.push(this.mentionne[i]);
             }
         }
     }
