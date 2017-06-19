@@ -1,5 +1,14 @@
 {
-  "leader":[
-
-  ]
+  "leader":{
+    "freqtweet":3,
+    "moylike":70,
+    "moyrt":40,
+    "moyhash":3
+  },
+  "suiveur":{
+    "freqtweet":1,
+    "moylike":4,
+    "moyrt":2,
+    "moyhash":4
+  }
 }

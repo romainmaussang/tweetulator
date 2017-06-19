@@ -28,7 +28,15 @@ html
             });
             var botStats = [];
             $(function () {
-                $.getJSON('/data/statsGenerales.json', function (data) {
+                $.getJSON('/data/statsBots.json', function (data) {
+                    botStats[0] = data.leader.freqtweet
+                    botStats[1] = data.leader.moylike
+                    botStats[2] = data.leader.moyrt
+                    botStats[3] = data.leader.moyhash
+                    botStats[4] = data.suiveur.freqtweet
+                    botStats[5] = data.suiveur.moylike
+                    botStats[6] = data.suiveur.moyrt
+                    botStats[7] = data.suiveur.moyhash
 
                 });
             });
@@ -101,10 +109,10 @@ html
             function drawChart3() {
                 var data = google.visualization.arrayToDataTable([
                     ['Données', 'Leader','Suiveur'],
-                    ['fréqence de tweets par min',60,5],
-                    ['nombre moyen de likes par tweet',70,3],
-                    ['nombre moyen de Retweets par tweet',25,2],
-                    ['nombre moyen de hashtags par tweet',4,3]
+                    ['fréqence de tweets par min',botStats[0],botStats[4]],
+                    ['nombre moyen de likes par tweet',botStats[1],botStats[5]],
+                    ['nombre moyen de Retweets par tweet',botStats[2],botStats[6]],
+                    ['nombre moyen de hashtags par tweet',botStats[3],botStats[7]]
                 ]);
 
                 var options = {
