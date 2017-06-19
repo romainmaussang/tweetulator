@@ -7,8 +7,9 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET resultats page. */
-router.get('/resultats', function(req, res, next) {
-    res.render('resultats', { title: 'Tweetulator' });
+router.get('/results', function(req, res, next) {
+
+    res.render('results', { title: 'Tweetulator' });
 });
 
 
