@@ -45,19 +45,19 @@ module.exports
     // Ajout de méthode
         Bot.prototype = {
 
-            getMentionnedby : function (bot) {
-                this.mentionnedby().push(bot);
+            getmentionnedby : function (bot) {
+                this.mentionnedby.push(bot);
             },
 
-            getFollowedby : function (bot) {
-                this.followedby().push(bot);
+            getfollowedby : function (bot) {
+                this.followedby.push(bot);
             },
 
-            getProbamentionned : function () {
+            getprobamentionned : function () {
                 return this.probamentionned;
             },
 
-            getVisibilite : function () {
+            getvisibilite : function () {
               return this.visibilite;
             },
             // fonction à appeler à chaque boucle de notre programme
@@ -106,24 +106,20 @@ module.exports
                 // on détermine le nombre de mentions ainsi que les bots mentionnés
                 var nbmentionned = 0;
                 var testproba = Math.random();
-                console.log("1");
                 while (testproba < this.probamention){
                     nbmentionned++;
                     testproba = Math.random();
                 }
-                console.log("2");
                 var botsmentionned = [];
-                console.log(nbmentionned);
                 while (nbmentionned >0 ) {
-                    console.log("while : " + nbmentionned);
                    var numbottested = getRandomInt(0, listeBots.length-1);
-                   if ( Math.random() < listeBots[numbottested].getProbamentionned){
+                  if ( Math.random() < listeBots[numbottested].getprobamentionned()){
                        botsmentionned.push(listeBots[numbottested].name);
-                       listeBots[numbottested].getMentionnedby(this);
+                       listeBots[numbottested].getmentionnedby(this);
+                       nbmentionned--;
                    }
-                    nbmentionned--;
+
                 }
-                console.log("3");
                 //on détermine si le tweet comportera une photo
                 var photo = false;
                 if (Math.random() < this.probaphoto){
@@ -139,7 +135,9 @@ module.exports
                 console.log("Ajout du log");
                 // Ajouter un tweet
                 var d = new Date();
+                // c'est ici que ça merde Romain
                 tweet.listeTweets.push(tweet.Tweet(this.name, nbhashtag, botsmentionned.length, photo, tweet.listeTweets.length, nblien, false, null,  botsmentionned, (d.getHours()+"h"+d.getMinutes())));
+                console.log(tweet.listeTweets[0]);
                 // Ajouter un log
                 var hour = d.getHours()+"h"+d.getMinutes();
                 log.ajouterLog(this.name, hour, tweet.listeTweets[tweet.listeTweets.length-1], "a tweeté" )
@@ -212,10 +210,10 @@ module.exports
                 var hasFollowed = false;
                 while (hasFollowed === false){
                     var botToFollow = getRandomInt(0, listeBots.length-1);
-                    if(Math.random() < listeBots.get(botToFollow).getVisibilite()){
+                    if(Math.random() < listeBots.get(botToFollow).getvisibilite()){
                         var alreadyFollowed = containsObject(listeBots[botToFollow],this.isFollowing);
                         if(alreadyFollowed === false){
-                            listeBots[botToFollow].getFollowedby(this);
+                            listeBots[botToFollow].getfollowedby(this);
                             this.isFollowing.push(listeBots[botToFollow]);
                             hasFollowed = true;
                             // TO DO ajouter log

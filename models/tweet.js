@@ -22,7 +22,7 @@ module.exports
         this.mentionne = [] ;
 
         for (var i = 0; i< mentions.length; i++){
-            this.mentionne.push(mentions.get(i));
+            this.mentionne.push(mentions[i]);
         }
     }
 
