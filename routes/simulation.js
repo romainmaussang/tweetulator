@@ -3,6 +3,7 @@ var router = express.Router();
 
 var bot = require('../models/bot.js');
 var log = require('../models/log.js');
+var tweet = require('../models/tweet.js');
 
 /* GET simulation page.*/
 router.get('/', function(req, res) {
@@ -62,6 +63,5 @@ function simulate(listeBots, nbTours) {
                 listeBots[i].chooseAction();
             }
     }
-
     console.log(log.listeLogs.length);
 }

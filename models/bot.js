@@ -11,6 +11,8 @@ module.exports
                   nbhashtag, probalien, probalike, probamention,
                   probamentionned, visibilite ,probaphoto) {
         this.nom = nom;
+        this.probafollow = probafollow;
+        this.probaunfollow = probaunfollow;
         this.probatweet = probatweet;
         this.probaretweet = probaretweet;
         this.nbhashtagpossible = nbhashtag;
@@ -45,6 +47,10 @@ module.exports
     // Ajout de méthode
         Bot.prototype = {
 
+            getNom : function () {
+              return this.nom;
+            },
+
             getmentionnedby : function (bot) {
                 this.mentionnedby.push(bot);
             },
@@ -78,12 +84,12 @@ module.exports
                     }else if(chooseStat>(this.probatweet+this.probaretweet) && chooseStat <(this.probatweet+this.probaretweet+this.probafollow)) {
                         this.follow();
                     }else if(chooseStat>(this.probatweet+this.probaretweet+this.probafollow) && chooseStat < (this.probatweet+this.probaretweet+this.probafollow+this.probaunfollow)){
-                        if(this.isFollowing.isEmpty() === false){
+                        if(this.isFollowing.length > 0){
                         this.unFollow();
                         stopLoop = true;
                         }
                     }else if(chooseStat>(this.probatweet+this.probaretweet+this.probafollow+this.probaunfollow)){
-                        if(tweet.listeTweets.isEmpty() === false){
+                        if(tweet.listeTweets.length > 0){
                             this.likeTweet(tweet.listeTweets);
                             stopLoop = true;
                         }
@@ -114,7 +120,7 @@ module.exports
                 while (nbmentionned >0 ) {
                    var numbottested = getRandomInt(0, listeBots.length-1);
                   if ( Math.random() < listeBots[numbottested].getprobamentionned()){
-                       botsmentionned.push(listeBots[numbottested].name);
+                       botsmentionned.push(listeBots[numbottested].getNom());
                        listeBots[numbottested].getmentionnedby(this);
                        nbmentionned--;
                    }
@@ -138,6 +144,7 @@ module.exports
                 // c'est ici que ça merde Romain
                 // On créé le tweet et on l'a à la liste des tweets
                 var tweetToAdd = new tweet.Tweet(this.nom,nbhashtag,botsmentionned.length, photo, tweet.listeTweets.length, nblien, false, -1, botsmentionned, (d.getHours()+"h"+d.getMinutes()));
+                console.log(tweetToAdd);
 
                 if("undefined" != typeof tweetToAdd ) {
                     console.log("is defined : " + tweetToAdd);
@@ -146,7 +153,7 @@ module.exports
 
                 // Ajouter un log
                 var hour = d.getHours()+"h"+d.getMinutes();
-                log.ajouterLog(this.name, hour, tweet.listeTweets[tweet.listeTweets.length-1], "a tweeté" )
+                log.ajouterLog(this.nom, hour, tweet.listeTweets[tweet.listeTweets.length-1], "a tweeté" )
 
             },
 
@@ -193,52 +200,49 @@ module.exports
                 }
                 // Ajouter un log
                 var hour = d.getHours()+"h"+d.getMinutes();
-                log.ajouterLog(this.name, hour, tweet.listeTweets[tweet.listeTweets.length-1], "a retweeté" )
+                log.ajouterLog(this.nom, hour, tweet.listeTweets[tweet.listeTweets.length-1], "a retweeté" )
             },
+
             // Fonction qui détermine si on like un tweet ou non
-            likeTweet: function(tweets) {
-                console.log("LikeTweet");
-                var tweetsLeader = new Array();
-                var tweetsSuiveur = new Array();
+            likeTweet: function() {
 
-                // On parcours les tweets pour les classer par type d'auteur
-                for(var i = 0 ; i < tweets.length ; i++) {
-                    // On classe les tweets par auteur (LEADER ou SUIVEUR)
-                    if(tweets[i].getAuteur().contains("LEADER")) {
-                        tweetsLeader.push(tweets[i]);
+                var tweetToLike = getRandomInt(0,(tweet.listeTweets.length-1));
+                var liked = false;
+                while (liked === false){
+                    if(tweet.listeTweets[tweetToLike].getAuteur().search("Leader")){
+                        if(Math.random() < 0.8){
+                            tweet.listeTweets[tweetToLike].addLike(this.nom);
+                            liked = true;
+                        }
                     } else {
-                        tweetsSuiveur.push(tweets[i]);
+                        if(Math.random()<0.2){
+                            tweet.listeTweets[tweetToLike].addLike(this.nom);
+                            liked = true;
+                        }
                     }
+                    var d = new Date();
+                    var hour = d.getHours()+"h"+d.getMinutes();
+                    log.ajouterLog(this.nom, hour, tweet.listeTweets[tweet.listeTweets.length-1], "a like" );
                 }
-                // On détermine le coeff de like
-                var coeff = Math.round((Math.random()*100)); // donne un nombre entre 0 et 9
-                var tweetToLike = 0;
 
-                // Si < 1 >>> on like un Suiveur sinon on like un Leader
-                if(coeff < 1) {
-                    tweetToLike = getRandomInt(0,tweetsSuiveur.length);
-                    // On ajoute un like au tweet
-                    tweetsSuiveur[tweetToLike].addLike(this.nom);
-                } else {
-                    tweetToLike = getRandomInt(0,tweetsLeader.length);
-                    // On ajoute un like au tweet
-                    tweetsLeader[tweetToLike].addLike(this.nom);
-                }
-                //TO DO ajouter log
             },
+
 
             follow : function () {
                 console.log("Follow");
                 var hasFollowed = false;
                 while (hasFollowed === false){
                     var botToFollow = getRandomInt(0, listeBots.length-1);
-                    if(Math.random() < listeBots.get(botToFollow).getvisibilite()){
+                    if(Math.random() < listeBots[botToFollow].getvisibilite()){
                         var alreadyFollowed = containsObject(listeBots[botToFollow],this.isFollowing);
                         if(alreadyFollowed === false){
                             listeBots[botToFollow].getfollowedby(this);
                             this.isFollowing.push(listeBots[botToFollow]);
                             hasFollowed = true;
                             // TO DO ajouter log
+                            var d = new Date();
+                            var hour = d.getHours()+"h"+d.getMinutes();
+                            log.ajouterLog(this.nom, hour, this.isFollowing[this.isFollowing.length-1], "a follow" )
                         }
                     }
                 }
@@ -247,7 +251,11 @@ module.exports
             unFollow :function () {
                 console.log("Unfollow");
                 var botToUnfollow = getRandomInt(0, this.isFollowing.length-1);
+                var botunfollowed = this.isFollowing[botToUnfollow];
                 this.isFollowing.splice(botToUnfollow,1);
+                var d = new Date();
+                var hour = d.getHours()+"h"+d.getMinutes();
+                log.ajouterLog(this.nom, hour, botunfollowed, "a unfollow" )
             }
         };
 
