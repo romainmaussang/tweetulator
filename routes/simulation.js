@@ -1,9 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
+
 var bot = require('../models/bot.js');
 var log = require('../models/log.js');
 var tweet = require('../models/tweet.js');
+var parsers = require('../models/parsers.js');
 
 /* GET simulation page.*/
 router.get('/', function(req, res) {
@@ -20,6 +22,10 @@ router.get('/', function(req, res) {
 
     // On récupère les logs
     var logs = log.listeLogs;
+
+    // On formate les données pour les graph
+    parsers.updateProportionBots(parseInt((nbBots * (100-leader))/100),parseInt((nbBots * leader)/100));
+    parsers.updateProportionTypes(tweet.listeTweets);
 
     // On génère la page qui affiche les actions
     res.render('simulation', { title: 'Tweetulator - Simulation' , listeBots: bots, listeLogs: logs});
