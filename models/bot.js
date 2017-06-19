@@ -200,7 +200,7 @@ module.exports
                 }
                 // Ajouter un log
                 var hour = d.getHours()+"h"+d.getMinutes();
-                log.ajouterLog(this.nom, hour, "le tweet n°" + tweet.listeTweets[tweet.listeTweets.length-1].getId(), "a retweeté" )
+                log.ajouterLog(this.nom, hour, "le tweet n°" + tweet.listeTweets[tw].getId(), "a retweeté" )
             },
 
             // Fonction qui détermine si on like un tweet ou non
@@ -222,7 +222,7 @@ module.exports
                     }
                     var d = new Date();
                     var hour = d.getHours()+"h"+d.getMinutes();
-                    log.ajouterLog(this.nom, hour, "le tweet n°" + tweet.listeTweets[tweet.listeTweets.length-1].getId(), "a like" );
+                    log.ajouterLog(this.nom, hour, "le tweet n°" + tweet.listeTweets[tweetToLike].getId(), "a like" );
                 }
 
             },
