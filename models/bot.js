@@ -5,18 +5,14 @@ module.exports
 {
     var listeBots = [];
     exports.listeBots = listeBots;
-    //var listeTweets = new Array();
-
 
     // Constructeur
     function Bot (nom, probafollow, probaunfollow, probatweet, probaretweet,
                   nbhashtag, probalien, probalike, probamention,
                   probamentionned, visibilite ,probaphoto) {
         this.nom = nom;
-        this.probafollow = probafollow;
-        this.probaunfollow = probaunfollow;
         this.probatweet = probatweet;
-        this.probaretweet =probaretweet;
+        this.probaretweet = probaretweet;
         this.nbhashtagpossible = nbhashtag;
         this.probalien = probalien;
         this.probalike = probalike;
@@ -64,19 +60,6 @@ module.exports
             getVisibilite : function () {
               return this.visibilite;
             },
-
-           /* chooseAction : function () {
-              var nb = Math.random()*100;
-              if(lireTweets() === false)   {
-                  this.publieTweet();
-              } else {
-                  var tweets = lireTweets();
-              }
-              if(nb < 1) {
-
-              }
-            }, */
-
             // fonction à appeler à chaque boucle de notre programme
             chooseAction : function () {
             var chooseStat = Math.random();
@@ -113,10 +96,7 @@ module.exports
                 var tweets = log.getTweets();
                 return tweets;
             },
-
-
-
-
+            //TODO
             publieTweet: function () {
                 //on détermine le nombre de hashtags
                 var nbhashtag = getRandomInt(0, this.nbhashtagpossible);
@@ -187,8 +167,8 @@ module.exports
             // Fonction qui détermine si on like un tweet ou non
             likeTweet: function(tweets) {
 
-                var tweetsLeader = [];
-                var tweetsSuiveur = [];
+                var tweetsLeader = new Array();
+                var tweetsSuiveur = new Array();
 
                 // On parcours les tweets pour les classer par type d'auteur
                 for(var i = 0 ; i < tweets.length ; i++) {
@@ -203,6 +183,7 @@ module.exports
                 var coeff = Math.round((Math.random()*100)); // donne un nombre entre 0 et 9
                 var tweetToLike = 0;
 
+                // Si < 1 >>> on like un Suiveur sinon on like un Leader
                 if(coeff < 1) {
                     tweetToLike = getRandomInt(0,tweetsSuiveur.length);
                     // On ajoute un like au tweet
@@ -230,7 +211,7 @@ module.exports
                     }
                 }
             },
-            
+
             unFollow :function () {
                 var botToUnfollow = getRandomInt(0, this.isFollowing.length-1);
                 this.isFollowing.splice(botToUnfollow,1);
