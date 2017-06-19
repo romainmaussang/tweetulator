@@ -15,6 +15,26 @@ html
                 font-size: 32px;
                 text-align:center;
             }
+        script(type='text/javascript', src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js')
+        script.
+            var genStats = [];
+            $(function () {
+                $.getJSON('/data/statsGenerales.json', function (data) {
+                    genStats[0] = data.tweets
+                    genStats[1] = data.likes
+                    genStats[2] = data.retweets
+                    genStats[3] = data.bots
+                    });
+            });
+            var botStats = [];
+            $(function () {
+                $.getJSON('/data/statsGenerales.json', function (data) {
+                    genStats[0] = data.tweets
+                    genStats[1] = data.likes
+                    genStats[2] = data.retweets
+                    genStats[3] = data.bots
+                });
+            });
         script(type='text/javascript', src='https://www.gstatic.com/charts/loader.js')
         script(type='text/javascript').
             google.charts.load('current', {'packages': ['corechart','bar']});
@@ -26,10 +46,10 @@ html
             function drawChart1() {
                 var data = google.visualization.arrayToDataTable([
                     ['données', 'quantité'],
-                    ['tweets', 1000],
-                    ['likes', 1170],
-                    ['Retweets', 660],
-                    ['bots', 1030]
+                    ['tweets', genStats[0]],
+                    ['likes', genStats[1]],
+                    ['Retweets', genStats[2]],
+                    ['bots', genStats[3]]
                 ]);
 
                 var options = {
@@ -117,7 +137,7 @@ html
                 script(src='/javascript/sigma.min.js')
                 script(src='/javascript/plugins/sigma.parsers.json.min.js')
                 script.
-                    graph1 = sigma.parsers.json('/data/interactGraph.json', {
+                    graph1 = new sigma.parsers.json('/data/interactGraph.json', {
                         container: 'container1',
                         settings: {
                             defaultNodeColor: '#ec5148'
@@ -134,7 +154,7 @@ html
                 script(src='/javascript/sigma.min.js')
                 script(src='/javascript/plugins/sigma.parsers.json.min.js')
                 script.
-                    graph2 = sigma.parsers.json('/data/followGraph.json', {
+                    graph2 = new sigma.parsers.json('/data/followGraph.json', {
                         container: 'container2',
                         settings: {
                             defaultNodeColor: '#ec5148'
