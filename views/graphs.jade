@@ -8,10 +8,10 @@ html
             }
     body
         #container
-        script(src='public/javascript/sigma.min.js')
-        script(src='sigma.parsers.json.min.js')
+        script(src='/javascript/sigma.min.js')
+        script(src='/javascript/plugins/sigma.parsers.json.min.js')
         script.
-            sigma.parsers.json('/../public/data/data.json', {
+            sigma.parsers.json('/data/data.json', {
                 container: 'container',
                 settings: {
                     defaultNodeColor: '#ec5148'
