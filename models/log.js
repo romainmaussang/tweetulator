@@ -8,11 +8,14 @@ module.exports
     }
 
     var listeLogs = Array();
+    exports.listeLogs = listeLogs;
+
+
+    exports.ajouterLog = function(botName, heure, contenu, type) {
+        listeLogs.push(heure + " : " + botName + " action: " + type +" "+ contenu);
+    }
 
     Log.prototype = {
-        ajouterLog:function(botName, heure, contenu, type) {
-            listeLogs.push(heure + " : " + botName + " action: " + type +" "+ contenu);
-        },
         getLogs:function(){
             return listeLogs;
         }

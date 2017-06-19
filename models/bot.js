@@ -62,32 +62,34 @@ module.exports
             },
             // fonction à appeler à chaque boucle de notre programme
             chooseAction : function () {
-            var chooseStat = Math.random();
-            var stopLoop = false;
-            while (stopLoop === false){
-                if (chooseStat < this.probatweet){
-                    this.publieTweet();
-                    stopLoop = true;
-                } else if(chooseStat > this.probatweet && chooseStat <(this.probatweet+this.probaretweet)){
-                    if(tweet.listeTweets.isEmpty() === false){
-                    this.retweet();
-                    stopLoop = true;
-                    }
-                }else if(chooseStat>(this.probatweet+this.probaretweet) && chooseStat <(this.probatweet+this.probaretweet+this.probafollow)) {
-                    this.follow();
-                }else if(chooseStat>(this.probatweet+this.probaretweet+this.probafollow) && chooseStat < (this.probatweet+this.probaretweet+this.probafollow+this.probaunfollow)){
-                    if(this.isFollowing.isEmpty() === false){
-                    this.unFollow();
-                    stopLoop = true;
-                    }
-                }else if(chooseStat>(this.probatweet+this.probaretweet+this.probafollow+this.probaunfollow)){
-                    if(tweet.listeTweets.isEmpty() === false){
-                        this.likeTweet(tweet.listeTweets);
+                console.log("Choose Action");
+                var chooseStat = Math.random();
+                console.log(chooseStat);
+                var stopLoop = false;
+                while (stopLoop === false){
+                    if (chooseStat < this.probatweet){
+                        this.publieTweet();
                         stopLoop = true;
+                    } else if(chooseStat > this.probatweet && chooseStat <(this.probatweet+this.probaretweet)){
+                        if(tweet.listeTweets.length > 0){
+                        this.retweet();
+                        stopLoop = true;
+                        }
+                    }else if(chooseStat>(this.probatweet+this.probaretweet) && chooseStat <(this.probatweet+this.probaretweet+this.probafollow)) {
+                        this.follow();
+                    }else if(chooseStat>(this.probatweet+this.probaretweet+this.probafollow) && chooseStat < (this.probatweet+this.probaretweet+this.probafollow+this.probaunfollow)){
+                        if(this.isFollowing.isEmpty() === false){
+                        this.unFollow();
+                        stopLoop = true;
+                        }
+                    }else if(chooseStat>(this.probatweet+this.probaretweet+this.probafollow+this.probaunfollow)){
+                        if(tweet.listeTweets.isEmpty() === false){
+                            this.likeTweet(tweet.listeTweets);
+                            stopLoop = true;
+                        }
                     }
+                    chooseStat = Math.random();
                 }
-                chooseStat = Math.random();
-            }
             },
 
             //TODO cette fonction. Je ne sais pas son utilité mais il y a une bonne raison pour qu'elle soit là
@@ -98,24 +100,30 @@ module.exports
             },
             //TODO
             publieTweet: function () {
+                console.log("PublieTweet");
                 //on détermine le nombre de hashtags
                 var nbhashtag = getRandomInt(0, this.nbhashtagpossible);
                 // on détermine le nombre de mentions ainsi que les bots mentionnés
                 var nbmentionned = 0;
                 var testproba = Math.random();
+                console.log("1");
                 while (testproba < this.probamention){
                     nbmentionned++;
                     testproba = Math.random();
                 }
+                console.log("2");
                 var botsmentionned = [];
+                console.log(nbmentionned);
                 while (nbmentionned >0 ) {
+                    console.log("while : " + nbmentionned);
                    var numbottested = getRandomInt(0, listeBots.length-1);
                    if ( Math.random() < listeBots[numbottested].getProbamentionned){
                        botsmentionned.push(listeBots[numbottested].name);
                        listeBots[numbottested].getMentionnedby(this);
-                       nbmentionned--;
                    }
+                    nbmentionned--;
                 }
+                console.log("3");
                 //on détermine si le tweet comportera une photo
                 var photo = false;
                 if (Math.random() < this.probaphoto){
@@ -128,7 +136,7 @@ module.exports
                     nblien++;
                     testprobalien = Math.random();
                 }
-
+                console.log("Ajout du log");
                 // Ajouter un tweet
                 var d = new Date();
                 tweet.listeTweets.push(tweet.Tweet(this.name, nbhashtag, botsmentionned.length, photo, tweet.listeTweets.length, nblien, false, null,  botsmentionned, (d.getHours()+"h"+d.getMinutes())));
@@ -139,10 +147,13 @@ module.exports
             },
 
             retweet: function () {
+                console.log("Retweet");
                 // on détermine le tweet à retweet
                 var hasfoundtweet = false;
                 while (hasfoundtweet === false){
                     var potentialTweet = getRandomInt(0, tweet.listeTweets.length-1);
+                    console.log(potentialTweet);
+                    console.log(tweet.listeTweets);
                     if (tweet.listeTweets[potentialTweet].getAuteur().contains("LEADER")){
                         if (Math.random() < 0.8){
                             hasfoundtweet = true;
@@ -166,7 +177,7 @@ module.exports
             },
             // Fonction qui détermine si on like un tweet ou non
             likeTweet: function(tweets) {
-
+                console.log("LikeTweet");
                 var tweetsLeader = new Array();
                 var tweetsSuiveur = new Array();
 
@@ -197,6 +208,7 @@ module.exports
             },
 
             follow : function () {
+                console.log("Follow");
                 var hasFollowed = false;
                 while (hasFollowed === false){
                     var botToFollow = getRandomInt(0, listeBots.length-1);
@@ -213,6 +225,7 @@ module.exports
             },
 
             unFollow :function () {
+                console.log("Unfollow");
                 var botToUnfollow = getRandomInt(0, this.isFollowing.length-1);
                 this.isFollowing.splice(botToUnfollow,1);
             }

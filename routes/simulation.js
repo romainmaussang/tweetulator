@@ -14,6 +14,7 @@ router.get('/', function(req, res) {
     var bots = start(leader,nbBots);
 
     // On lance la simulation
+    console.log("simulate");
     simulate(bots, nbTours);
 
     // On récupère les logs
@@ -55,7 +56,10 @@ function start(leader, nbBots) {
 
 function simulate(listeBots, nbTours) {
     for(var w = 0 ; w < nbTours ; w++) {
+        console.log("Tour : " + w);
             for (var i = 0; i < listeBots.length; i++) {
+                console.log("nb bots : " + listeBots.length);
+                console.log("Bot n° : " + i);
                 listeBots[i].chooseAction();
             }
     }
