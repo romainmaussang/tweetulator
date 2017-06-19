@@ -35,6 +35,22 @@ html
                     genStats[3] = data.bots
                 });
             });
+            var propBots = [];
+            $(function () {
+                $.getJSON('/data/proportionBots.json', function (data) {
+                    propBots[0] = data.leaders
+                    propBots[1] = data.suiveurs
+                });
+            });
+            var propType = [];
+            $(function () {
+                $.getJSON('/data/proportionType.json', function (data) {
+                    propType[0] = data.normaux
+                    propType[1] = data.liens
+                    propType[2] = data.photo
+                    propType[3] = data.retweet
+                });
+            });
         script(type='text/javascript', src='https://www.gstatic.com/charts/loader.js')
         script(type='text/javascript').
             google.charts.load('current', {'packages': ['corechart','bar']});
@@ -70,8 +86,8 @@ html
             function drawChart2() {
                 var data = google.visualization.arrayToDataTable([
                     ['Type', 'Nombre'],
-                    ['Leaders', 50],
-                    ['Suiveurs', 200]
+                    ['Leaders', propBots[0]],
+                    ['Suiveurs', propBots[1]]
                 ]);
 
                 var options = {
@@ -111,10 +127,10 @@ html
             function drawChart4() {
                 var data = google.visualization.arrayToDataTable([
                     ['Type', 'Nombre'],
-                    ['Normaux', 50],
-                    ['Liens', 200],
-                    ['photo',30],
-                    ['retweet',500]
+                    ['Normaux',propType[0]],
+                    ['Liens', propType[1]],
+                    ['photo',propType[2]],
+                    ['retweet',propType[3]]
                 ]);
 
                 var options = {
