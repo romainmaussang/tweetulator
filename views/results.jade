@@ -29,10 +29,7 @@ html
             var botStats = [];
             $(function () {
                 $.getJSON('/data/statsGenerales.json', function (data) {
-                    genStats[0] = data.tweets
-                    genStats[1] = data.likes
-                    genStats[2] = data.retweets
-                    genStats[3] = data.bots
+
                 });
             });
             var propBots = [];
