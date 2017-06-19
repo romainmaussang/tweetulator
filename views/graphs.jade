@@ -1,0 +1,19 @@
+html
+    head
+        style(type='text/css').
+            #container {
+                max-width: 400px;
+                height: 400px;
+                margin: auto;
+            }
+    body
+        #container
+        script(src='public/javascript/sigma.min.js')
+        script(src='sigma.parsers.json.min.js')
+        script.
+            sigma.parsers.json('/../public/data/data.json', {
+                container: 'container',
+                settings: {
+                    defaultNodeColor: '#ec5148'
+                }
+            });
