@@ -117,12 +117,16 @@ html
                 script(src='/javascript/sigma.min.js')
                 script(src='/javascript/plugins/sigma.parsers.json.min.js')
                 script.
-                    sigma.parsers.json('/data/data.json', {
+                    graph1 = sigma.parsers.json('/data/interactGraph.json', {
                         container: 'container1',
                         settings: {
                             defaultNodeColor: '#ec5148'
                         }
                     });
+
+
+
+
         #column2(style='float:left; margin:0; width:50%;')
             #chart3(style='width: 950px; height: 500px;')
             #chart4(style='width: 900px; height: 500px;')
@@ -130,7 +134,7 @@ html
                 script(src='/javascript/sigma.min.js')
                 script(src='/javascript/plugins/sigma.parsers.json.min.js')
                 script.
-                    sigma.parsers.json('/data/data.json', {
+                    graph2 = sigma.parsers.json('/data/followGraph.json', {
                         container: 'container2',
                         settings: {
                             defaultNodeColor: '#ec5148'
