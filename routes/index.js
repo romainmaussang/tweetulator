@@ -11,4 +11,9 @@ router.get('/stats', function(req, res, next) {
     res.render('stats', { title: 'Tweetulator' });
 });
 
+/* GET graphs page. */
+router.get('/graphs', function(req, res, next) {
+    res.render('graphs', { title: 'Tweetulator' });
+});
+
 module.exports = router;
