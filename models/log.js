@@ -12,7 +12,7 @@ module.exports
 
 
     exports.ajouterLog = function(botName, heure, contenu, type) {
-        listeLogs.push(heure + " : " + botName + " action: " + type +" "+ contenu);
+        listeLogs.push(heure + " : " + botName + " " + type +" "+ contenu);
     }
 
     Log.prototype = {
