@@ -11,21 +11,22 @@ router.get('/', function(req, res) {
         nbTours  = req.query.tours;
 
     // On initialise les bots
-    var bots = start(leader,nbBots);
+    var bots = initialize(leader,nbBots);
 
     // On lance la simulation
     console.log("simulate");
     simulate(bots, nbTours);
 
     // On récupère les logs
-    var logs = log.getLogs();
+    var logs = log.listeLogs;
+
     // On génère la page qui affiche les actions
     res.render('simulation', { title: 'Tweetulator - Simulation' , listeBots: bots, listeLogs: logs});
 });
 
 module.exports = router;
 
-function start(leader, nbBots) {
+function initialize(leader, nbBots) {
 
     // Calcul des pourcentages
     var nbLeader = parseInt((nbBots * leader)/100);
@@ -61,4 +62,6 @@ function simulate(listeBots, nbTours) {
                 listeBots[i].chooseAction();
             }
     }
+
+    console.log(log.listeLogs.length);
 }
