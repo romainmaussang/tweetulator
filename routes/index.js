@@ -6,14 +6,10 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Tweetulator' });
 });
 
-/* GET stats page. */
-router.get('/stats', function(req, res, next) {
-    res.render('stats', { title: 'Tweetulator' });
+/* GET resultats page. */
+router.get('/resultats', function(req, res, next) {
+    res.render('resultats', { title: 'Tweetulator' });
 });
 
-/* GET graphs page. */
-router.get('/graphs', function(req, res, next) {
-    res.render('graphs', { title: 'Tweetulator' });
-});
 
 module.exports = router;
