@@ -3,7 +3,7 @@ var router = express.Router();
 
 var bot = require('../models/bot.js');
 
-/* GET simulation page. */
+/* GET simulation page. *///TODO get la variable tours pour faire fonctionner le main
 router.get('/', function(req, res) {
     var leader = req.query.leader,
         nbBots = req.query.select;
@@ -46,10 +46,10 @@ function start(leader, nbBots) {
 }
 
 function simulate(listeBots) {
-    //TODO ajouter une condition d'arrêt
-  //  for( var j = 0; j<tours; j++){
+
+     for( var j = 0; j<tours; j++){
         for( var i = 0 ; i<listeBots.length ; i++ ) {
             listeBots[i].chooseAction();
         }
- //   }
+   }
 }

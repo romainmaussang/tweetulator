@@ -1,9 +1,11 @@
 var log = require('./log.js');
+var bot = require ('./bot.js');
 module.exports
 {
 
     var listeTweets = [];
-
+    exports.listeTweets = listeTweets;
+    exports.Tweet = Tweet;
 
     // Constructeur
     function Tweet (auteur,nbhashtag,nbmention,photo,id,nblien,isretweet,retweetedid, mentions, tweetDate) {

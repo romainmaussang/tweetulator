@@ -1,5 +1,5 @@
-var log = require('./log.js');
-var tweet = require('./tweet.js');
+var log = require('log.js');
+var tweet = require('tweet.js');
 
 module.exports
 {
@@ -86,7 +86,7 @@ module.exports
                     this.publieTweet();
                     stopLoop = true;
                 } else if(chooseStat > this.probatweet && chooseStat <(this.probatweet+this.probaretweet)){
-                    if(listeTweets.isEmpty() === false){
+                    if(tweet.listeTweets.isEmpty() === false){
                     this.retweet();
                     stopLoop = true;
                     }
@@ -98,8 +98,8 @@ module.exports
                     stopLoop = true;
                     }
                 }else if(chooseStat>(this.probatweet+this.probaretweet+this.probafollow()+this.probaunfollow)){
-                    if(listeTweets.isEmpty() === false){
-                        this.likeTweet(listeTweets);
+                    if(tweet.listeTweets.isEmpty() === false){
+                        this.likeTweet(tweet.listeTweets);
                         stopLoop = true;
                     }
                 }
@@ -107,6 +107,7 @@ module.exports
             }
             },
 
+            //TODO cette fonction. Je ne sais pas son utilité mais il y a une bonne raison pour qu'elle soit là
             lireTweets: function () {
                 // Récupérer Tweets dans les logs
                 var tweets = log.getTweets();
@@ -137,7 +138,7 @@ module.exports
                 }
                 //on détermine si le tweet comportera une photo
                 var photo = false;
-                if (Math.Random < this.probaphoto){
+                if (Math.random() < this.probaphoto){
                     photo = true;
                 }
                 // on détermine le nombre de liens
@@ -150,10 +151,10 @@ module.exports
 
                 // Ajouter un tweet
                 var d = new Date();
-                listeTweets.push(new Tweet(this.name, nbhashtag, botsmentionned.length, photo, listeTweets.length(), nblien, false, null,  botsmentionned, (d.getHours()+"h"+d.getMinutes())));
+                tweet.listeTweets.push(tweet.Tweet(this.name, nbhashtag, botsmentionned.length, photo, listeTweets.length(), nblien, false, null,  botsmentionned, (d.getHours()+"h"+d.getMinutes())));
                 // Ajouter un log
                 var hour = d.getHours()+"h"+d.getMinutes();
-                log.ajouterLog(this.name, hour, listeTweets[listeTweets.length-1], "a tweeté" )
+                log.ajouterLog(this.name, hour, tweet.listeTweets[tweet.listeTweets.length-1], "a tweeté" )
 
             },
 
@@ -161,8 +162,8 @@ module.exports
                 // on détermine le tweet à retweet
                 var hasfoundtweet = false;
                 while (hasfoundtweet === false){
-                    var potentialTweet = getRandomInt(0, listeTweets.length-1);
-                    if (listeTweets[potentialTweet].getAuteur().contains("LEADER")){
+                    var potentialTweet = getRandomInt(0, tweet.listeTweets.length-1);
+                    if (tweet.listeTweets[potentialTweet].getAuteur().contains("LEADER")){
                         if (Math.random() < 0.8){
                             hasfoundtweet = true;
                         }
@@ -175,13 +176,13 @@ module.exports
                 }
                 var tw = potentialTweet;
                 var mentions = [];
-                listeTweets[tw].getMentionne(mentions);
+                tweet.listeTweets[tw].getMentionne(mentions);
                 // Ajouter un tweet
                 var d = new Date();
-                listeTweets.push(new Tweet (listeTweets[tw].getAuteur(),listeTweets[tw].getNbhashtag(),listeTweets[tw].getNbmention(), listeTweets[tw].getPhoto(), listeTweets.length() ,listeTweets[tw].getNblien(), true, listeTweets[tw].getId(),  mentions, (d.getHours()+"h"+d.getMinutes())  ));
+                tweet.listeTweets.push(tweet.Tweet (tweet.listeTweets[tw].getAuteur(),tweet.listeTweets[tw].getNbhashtag(),tweet.listeTweets[tw].getNbmention(), tweet.listeTweets[tw].getPhoto(), tweet.listeTweets.length() ,tweet.listeTweets[tw].getNblien(), true, tweet.listeTweets[tw].getId(),  mentions, (d.getHours()+"h"+d.getMinutes())  ));
                 // Ajouter un log
                 var hour = d.getHours()+"h"+d.getMinutes();
-                log.ajouterLog(this.name, hour, listeTweets[listeTweets.length-1], "a retweeté" )
+                log.ajouterLog(this.name, hour, tweet.listeTweets[tweet.listeTweets.length-1], "a retweeté" )
             },
             // Fonction qui détermine si on like un tweet ou non
             likeTweet: function(tweets) {
