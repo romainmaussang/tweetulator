@@ -199,7 +199,7 @@ module.exports
                     tweet.listeTweets.push(tweetToAdd);
                 }
                 // Ajouter un log
-                var hour = d.getHours()+"h"+d.getMinutes();
+                var hour = d.getHours()+"h"+d.getMinutes()+"min"+d.getSeconds()+ "s";
                 log.ajouterLog(this.nom, hour, "le tweet n°" + tweet.listeTweets[tw].getId(), "a retweeté" )
             },
 
@@ -221,8 +221,8 @@ module.exports
                         }
                     }
                     var d = new Date();
-                    log.ajouterLog(this.nom, hour, "le tweet n°" + tweet.listeTweets[tweetToLike].getId(), "a like" );
                     var hour = d.getHours()+"h"+d.getMinutes()+"min"+d.getSeconds()+ "s";
+                    log.ajouterLog(this.nom, hour, "le tweet n°" + tweet.listeTweets[tweetToLike].getId(), "a like" );
                 }
 
             },
@@ -254,7 +254,7 @@ module.exports
                 var botunfollowed = this.isFollowing[botToUnfollow];
                 this.isFollowing.splice(botToUnfollow,1);
                 var d = new Date();
-                var hour = d.getHours()+"h"+d.getMinutes();
+                var hour = d.getHours()+"h"+d.getMinutes()+"min"+d.getSeconds()+ "s";
                 log.ajouterLog(this.nom, hour, botunfollowed.getNom(), "a unfollow" )
             }
         };
