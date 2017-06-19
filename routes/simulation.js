@@ -3,15 +3,20 @@ var router = express.Router();
 
 var bot = require('../models/bot.js');
 
-/* GET simulation page. *///TODO get la variable tours pour faire fonctionner le main
+/* GET simulation page.*/
 router.get('/', function(req, res) {
     var leader = req.query.leader,
-        nbBots = req.query.select;
-        //tours  = req.query.tours;
+        nbBots = req.query.select,
+        nbTours  = req.query.tours;
 
+    // On initialise les bots
     var bots = start(leader,nbBots);
+
+    // On lance la simulation
+    simulate(bots, nbTours);
+
+    // On génère la page qui affiche les actions
     res.render('simulation', { title: 'Tweetulator - Simulation' , listeBots: bots});
-    //simulate(bots);
 });
 
 module.exports = router;
@@ -45,11 +50,12 @@ function start(leader, nbBots) {
     return bot.listeBots;
 }
 
-function simulate(listeBots) {
-
-     for( var j = 0; j<tours; j++){
-        for( var i = 0 ; i<listeBots.length ; i++ ) {
-            listeBots[i].chooseAction();
+function simulate(listeBots, nbTours) {
+    for(var w = 0 ; w < nbTours.length ; w++) {
+        for (var j = 0; j < tours; j++) {
+            for (var i = 0; i < listeBots.length; i++) {
+                listeBots[i].chooseAction();
+            }
         }
-   }
+    }
 }
