@@ -1,5 +1,5 @@
-var log = require('log.js');
-var tweet = require('tweet.js');
+var log = require('./log.js');
+var tweet = require('./tweet.js');
 
 module.exports
 {
@@ -151,7 +151,7 @@ module.exports
 
                 // Ajouter un tweet
                 var d = new Date();
-                tweet.listeTweets.push(tweet.Tweet(this.name, nbhashtag, botsmentionned.length, photo, listeTweets.length(), nblien, false, null,  botsmentionned, (d.getHours()+"h"+d.getMinutes())));
+                tweet.listeTweets.push(tweet.Tweet(this.name, nbhashtag, botsmentionned.length, photo, tweet.listeTweets.length(), nblien, false, null,  botsmentionned, (d.getHours()+"h"+d.getMinutes())));
                 // Ajouter un log
                 var hour = d.getHours()+"h"+d.getMinutes();
                 log.ajouterLog(this.name, hour, tweet.listeTweets[tweet.listeTweets.length-1], "a tweeté" )

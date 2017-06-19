@@ -1,6 +1,6 @@
 module.exports
 {
-    exports.ajouterLog = ajouterLog;
+   // exports.ajouterLog = ajouterLog;
 
     function Log(idBot, heure, contenu, type){
         this.idBot = idBot;
