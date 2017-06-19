@@ -83,6 +83,7 @@ module.exports
                         }
                     }else if(chooseStat>(this.probatweet+this.probaretweet) && chooseStat <(this.probatweet+this.probaretweet+this.probafollow)) {
                         this.follow();
+                        stopLoop = true;
                     }else if(chooseStat>(this.probatweet+this.probaretweet+this.probafollow) && chooseStat < (this.probatweet+this.probaretweet+this.probafollow+this.probaunfollow)){
                         if(this.isFollowing.length > 0){
                         this.unFollow();
