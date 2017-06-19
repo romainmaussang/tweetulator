@@ -1,7 +1,5 @@
 module.exports
 {
-   // exports.ajouterLog = ajouterLog;
-
     function Log(idBot, heure, contenu, type){
         this.idBot = idBot;
         this.heure = heure;
@@ -13,7 +11,10 @@ module.exports
 
     Log.prototype = {
         ajouterLog:function(botName, heure, contenu, type) {
-            listeLogs.add(heure + " : " + botName + " action: " + type +" "+ contenu);
+            listeLogs.push(heure + " : " + botName + " action: " + type +" "+ contenu);
+        },
+        getLogs:function(){
+            return listeLogs;
         }
     }
 

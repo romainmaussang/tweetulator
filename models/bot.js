@@ -73,14 +73,14 @@ module.exports
                     this.retweet();
                     stopLoop = true;
                     }
-                }else if(chooseStat>(this.probatweet+this.probaretweet) && chooseStat <(this.probatweet+this.probaretweet+this.probafollow())) {
+                }else if(chooseStat>(this.probatweet+this.probaretweet) && chooseStat <(this.probatweet+this.probaretweet+this.probafollow)) {
                     this.follow();
-                }else if(chooseStat>(this.probatweet+this.probaretweet+this.probafollow()) && chooseStat < (this.probatweet+this.probaretweet+this.probafollow()+this.probaunfollow)){
+                }else if(chooseStat>(this.probatweet+this.probaretweet+this.probafollow) && chooseStat < (this.probatweet+this.probaretweet+this.probafollow+this.probaunfollow)){
                     if(this.isFollowing.isEmpty() === false){
                     this.unFollow();
                     stopLoop = true;
                     }
-                }else if(chooseStat>(this.probatweet+this.probaretweet+this.probafollow()+this.probaunfollow)){
+                }else if(chooseStat>(this.probatweet+this.probaretweet+this.probafollow+this.probaunfollow)){
                     if(tweet.listeTweets.isEmpty() === false){
                         this.likeTweet(tweet.listeTweets);
                         stopLoop = true;
@@ -131,7 +131,7 @@ module.exports
 
                 // Ajouter un tweet
                 var d = new Date();
-                tweet.listeTweets.push(tweet.Tweet(this.name, nbhashtag, botsmentionned.length, photo, tweet.listeTweets.length(), nblien, false, null,  botsmentionned, (d.getHours()+"h"+d.getMinutes())));
+                tweet.listeTweets.push(tweet.Tweet(this.name, nbhashtag, botsmentionned.length, photo, tweet.listeTweets.length, nblien, false, null,  botsmentionned, (d.getHours()+"h"+d.getMinutes())));
                 // Ajouter un log
                 var hour = d.getHours()+"h"+d.getMinutes();
                 log.ajouterLog(this.name, hour, tweet.listeTweets[tweet.listeTweets.length-1], "a tweeté" )

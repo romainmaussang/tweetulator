@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var bot = require('../models/bot.js');
+var log = require('../models/log.js');
 
 /* GET simulation page.*/
 router.get('/', function(req, res) {
@@ -15,8 +16,10 @@ router.get('/', function(req, res) {
     // On lance la simulation
     simulate(bots, nbTours);
 
+    // On récupère les logs
+    var logs = log.getLogs();
     // On génère la page qui affiche les actions
-    res.render('simulation', { title: 'Tweetulator - Simulation' , listeBots: bots});
+    res.render('simulation', { title: 'Tweetulator - Simulation' , listeBots: bots, listeLogs: logs});
 });
 
 module.exports = router;
@@ -51,11 +54,9 @@ function start(leader, nbBots) {
 }
 
 function simulate(listeBots, nbTours) {
-    for(var w = 0 ; w < nbTours.length ; w++) {
-        for (var j = 0; j < tours; j++) {
+    for(var w = 0 ; w < nbTours ; w++) {
             for (var i = 0; i < listeBots.length; i++) {
                 listeBots[i].chooseAction();
             }
-        }
     }
 }
