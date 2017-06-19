@@ -7,9 +7,11 @@ var bot = require('../models/bot.js');
 router.get('/', function(req, res) {
     var leader = req.query.leader,
         nbBots = req.query.select;
+        //tours  = req.query.tours;
 
     var bots = start(leader,nbBots);
     res.render('simulation', { title: 'Tweetulator - Simulation' , listeBots: bots});
+    //simulate(bots);
 });
 
 module.exports = router;
@@ -45,7 +47,9 @@ function start(leader, nbBots) {
 
 function simulate(listeBots) {
     //TODO ajouter une condition d'arrêt
-    for( var i = 0 ; i<listeBots.length ; i++ ) {
-        listeBots[i].chooseAction();
-    }
+  //  for( var j = 0; j<tours; j++){
+        for( var i = 0 ; i<listeBots.length ; i++ ) {
+            listeBots[i].chooseAction();
+        }
+ //   }
 }
