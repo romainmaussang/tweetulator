@@ -4,7 +4,6 @@ var log = require('./log.js');
 var jsonfile = require('jsonfile');
 var tweet = require('./tweet.js');
 
-module.exports
 {
     exports.updateProportionTypes = function (listeTweets) {
 
@@ -43,6 +42,44 @@ module.exports
         var file = './public/data/proportionBots.json';
 
         var obj = { leaders: nbBotLeader, suiveurs: nbBotSuiveur}
+        jsonfile.writeFile(file, obj, function (err) {
+            console.error(err)
+        });
+
+        jsonfile.readFile(file, function (err, obj) {
+            console.dir(obj)
+        });
+    }
+
+    exports.updateStatsGenerales = function (listeTweets,nbBotLeader,nbBotSuiveur) {
+        var file = './public/data/statsGenerales.json';
+
+        var tweets = listeTweets.length;
+        var likes = 0;
+        var rt = 0;
+        var nbbot = nbBotLeader+nbBotSuiveur;
+
+        for(var i = 0 ; i < listeTweets.length ; i++) {
+            likes += listeTweets[i].likedBy.length;
+            if(listeTweets[i].isretweet == true) {
+                rt ++;
+            }
+        }
+
+        var obj = {tweets:tweets, likes:likes, retweets:rt, bots:nbbot}
+        jsonfile.writeFile(file, obj, function (err) {
+            console.error(err)
+        });
+
+        jsonfile.readFile(file, function (err, obj) {
+            console.dir(obj)
+        });
+    }
+
+    exports.updateStatsBots = function () {
+        var file = './public/data/statsBots.json';
+
+        var obj = { }
         jsonfile.writeFile(file, obj, function (err) {
             console.error(err)
         });

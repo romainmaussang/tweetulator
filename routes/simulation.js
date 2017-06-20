@@ -26,7 +26,7 @@ router.get('/', function(req, res) {
     // On formate les données pour les graph
     parsers.updateProportionBots(parseInt((nbBots * (100-leader))/100),parseInt((nbBots * leader)/100));
     parsers.updateProportionTypes(tweet.listeTweets);
-
+    parsers.updateStatsGenerales(tweet.listeTweets,parseInt(leader),parseInt(nbBots-leader));
     // On génère la page qui affiche les actions
     res.render('simulation', { title: 'Tweetulator - Simulation' , listeBots: bots, listeLogs: logs});
 });
