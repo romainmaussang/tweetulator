@@ -114,4 +114,46 @@ var tweet = require('./tweet.js');
             console.dir(obj)
         });
     }
+
+    exports.updateFollowGraph = function (listeBots) {
+        var file = './public/data/followGraph.json';
+
+        var nodes = [];
+        var edges = [];
+        var idedge=0;
+        var addNode=function (name) {
+            return "{\"id\":\""+name+"\",\"label\":\""+name+"\",\"x\":0,\"y\":0,\"size\":1}"
+        };
+        var addEdge=function (node1,node2,num_edge) {
+            return "{\"id\":\"e"+num_edge+"\",\"source\":\""+node1+"\",\"target\":\""+node2+"\"}"
+
+        };
+
+        for(var i = 0 ; i < listeBots.length; i++) {
+            nodes.push(addNode(listeBots[i].nom));
+            for(var j = 0 ; j < listeBots[i].followedby.length; i++) {
+                edges.push(addEdge(listeBots[i].nom,listeBots[i].followedby[j].nom,idedge));
+                idedge++;
+            }
+        }
+        var toWrite = "{\"nodes\":[";
+        for(var k = 0 ; k < nodes.length-1; k++) {
+            toWrite+=nodes[k]+",";
+        }
+        toWrite+=nodes[nodes.length-1]+"],\"edges\":[";
+        for(var l = 0 ; l < edges.length-1; l++) {
+            toWrite+=edges[l]+",";
+        }
+        toWrite+=edges[edges.length-1];
+        toWrite+="]}";
+
+        var obj = JSON.parse(toWrite)
+        jsonfile.writeFile(file, obj, function (err) {
+            console.error(err)
+        });
+
+        jsonfile.readFile(file, function (err, obj) {
+            console.dir(obj)
+        });
+    }
 }
