@@ -76,19 +76,36 @@ var tweet = require('./tweet.js');
         });
     }
 
-    exports.updateStatsBots = function () {
+    exports.updateStatsBots = function (listeTweets,nbtours) {
         var file = './public/data/statsBots.json';
 
-        var lfreqt;
-        var lmoyl;
-        var lmoyrt;
-        var lmoyhash;
-        var sfreqt;
-        var smoyl;
-        var smoyrt;
-        var smoyhash;
+        var lfreqt=0;
+        var lmoyl=0;
+        var lmoyhash=0;
+        var sfreqt=0;
+        var smoyl=0;
+        var smoyhash=0;
 
-        var obj = {leader:{freqtweet:lfreqt, moylike:lmoyl, moyrt:lmoyrt, moyhash:lmoyhash},suiveur:{freqtweet:sfreqt, moylike:smoyl, moyrt:smoyrt, moyhash:smoyhash}}
+        for(var i = 0 ; i < listeTweets.length ; i++) {
+            if(listeTweets[i].getAuteur().search("Leader")){
+                lfreqt ++;
+                lmoyl+=listeTweets[i].likedBy.length;
+                lmoyhash+=listeTweets[i].nbhashtag;
+            }
+            else if(listeTweets[i].getAuteur().search("Suiveur")){
+                sfreqt++;
+                smoyl+=listeTweets[i].likedBy.length;;
+                smoyhash+=listeTweets[i].nbhashtag;
+            }
+        }
+        lmoyl = lmoyl/lfreqt;
+        lmoyhash = lmoyhash/lfreqt;
+        smoyl = smoyl/sfreqt;
+        smoyhash = smoyhash/sfreqt;
+        lfreqt = lfreqt/nbtours;
+        sfreqt = sfreqt/nbtours;
+
+        var obj = {leader:{freqtweet:lfreqt, moylike:lmoyl, moyhash:lmoyhash},suiveur:{freqtweet:sfreqt, moylike:smoyl, moyhash:smoyhash}}
         jsonfile.writeFile(file, obj, function (err) {
             console.error(err)
         });

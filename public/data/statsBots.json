@@ -1,14 +1,1 @@
-{
-  "leader":{
-    "freqtweet":3,
-    "moylike":70,
-    "moyrt":40,
-    "moyhash":3
-  },
-  "suiveur":{
-    "freqtweet":1,
-    "moylike":4,
-    "moyrt":2,
-    "moyhash":4
-  }
-}
+{"leader":{"freqtweet":21.04,"moylike":0.7870722433460076,"moyhash":1.5551330798479088},"suiveur":{"freqtweet":0,"moylike":null,"moyhash":null}}
