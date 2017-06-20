@@ -121,8 +121,16 @@ var tweet = require('./tweet.js');
         var nodes = [];
         var edges = [];
         var idedge=0;
+        var x = 0;
+        var y = 0;
         var addNode=function (name) {
-            return "{\"id\":\""+name+"\",\"label\":\""+name+"\",\"x\":0,\"y\":0,\"size\":1}"
+            if (x<=25){
+                x++;
+            }
+            else{
+                x=0,y++;
+            }
+            return "{\"id\":\""+name+"\",\"label\":\""+name+"\",\"x\":"+x+",\"y\":"+y+",\"size\":1}";
         };
         var addEdge=function (node1,node2,num_edge) {
             return "{\"id\":\"e"+num_edge+"\",\"source\":\""+node1+"\",\"target\":\""+node2+"\"}"
