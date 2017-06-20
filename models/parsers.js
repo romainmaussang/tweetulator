@@ -79,7 +79,16 @@ var tweet = require('./tweet.js');
     exports.updateStatsBots = function () {
         var file = './public/data/statsBots.json';
 
-        var obj = { }
+        var lfreqt;
+        var lmoyl;
+        var lmoyrt;
+        var lmoyhash;
+        var sfreqt;
+        var smoyl;
+        var smoyrt;
+        var smoyhash;
+
+        var obj = {leader:{freqtweet:lfreqt, moylike:lmoyl, moyrt:lmoyrt, moyhash:lmoyhash},suiveur:{freqtweet:sfreqt, moylike:smoyl, moyrt:smoyrt, moyhash:smoyhash}}
         jsonfile.writeFile(file, obj, function (err) {
             console.error(err)
         });
