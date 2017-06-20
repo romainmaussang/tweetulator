@@ -146,6 +146,7 @@ html
                 chart.draw(data, options);
 
             }
+
         title Résultats de la simulation
 
     body
@@ -183,3 +184,20 @@ html
                             defaultNodeColor: '#ec5148'
                         }
                     });
+                    //sigma layout
+                    var config = {
+                        nodeMargin: 3.0,
+                        scaleNodes: 1.0,
+                        gridSize:200
+                    };
+
+                    // Configure the algorithm
+                    var listener = graph2.configNoverlap(config);
+
+                    // Bind all events:
+                    listener.bind('start', function (event) {
+                        console.log(event.type);
+                    });
+
+                    // Start the algorithm:
+                    graph2.startNoverlap();
