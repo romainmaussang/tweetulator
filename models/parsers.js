@@ -131,7 +131,7 @@ var tweet = require('./tweet.js');
 
         for(var i = 0 ; i < listeBots.length; i++) {
             nodes.push(addNode(listeBots[i].nom));
-            for(var j = 0 ; j < listeBots[i].followedby.length; i++) {
+            for(var j = 0 ; j < listeBots[i].followedby.length; j++) {
                 edges.push(addEdge(listeBots[i].nom,listeBots[i].followedby[j].nom,idedge));
                 idedge++;
             }
