@@ -156,8 +156,10 @@ html
                a(href="/simulation", title="Logs") (Logs)
         #column1(style='float:left; margin:0; width:50%;')
             #chart1(style='width: 900px; height: 500px;')
+            a(href='http://localhost:3000/data/statsGenerales.json' download='statsGenerales') Télécharger le graph au format JSON
             #chart2(style='width: 900px; height: 500px;')
-            #container1
+            a(href='http://localhost:3000/data/proportionBots.json' download='proportionBots') Télécharger le graph au format JSON
+            //#container1
                 script(src='/javascript/sigma.min.js')
                 script(src='/javascript/plugins/sigma.parsers.json.min.js')
                 script.
@@ -167,16 +169,21 @@ html
                             defaultNodeColor: '#ec5148'
                         }
                     });
+            a(href='http://localhost:3000/data/interactGraph.json' download='interactGraph') Télécharger le graph au format JSON
 
 
 
 
         #column2(style='float:left; margin:0; width:50%;')
             #chart3(style='width: 950px; height: 500px;')
+            a(href='http://localhost:3000/data/statsBots.json' download='statsBots') Télécharger le graph au format JSON
             #chart4(style='width: 900px; height: 500px;')
+            a(href='http://localhost:3000/data/proportionType.json' download='proportionType') Télécharger le graph au format JSON
             #container2
                 script(src='/javascript/sigma.min.js')
                 script(src='/javascript/plugins/sigma.parsers.json.min.js')
+                script(src='/javascript/plugins/sigma.layout.noverlap.min.js')
+                script(src='/javascript/plugins/sigma.plugins.animate.min.js')
                 script.
                     graph2 = new sigma.parsers.json('/data/followGraph.json', {
                         container: 'container2',
@@ -185,6 +192,10 @@ html
                         }
                     });
                     //sigma layout
+                    s = new sigma({
+                        graph: graph2,
+                        container: 'container2'
+                    });
                     var config = {
                         nodeMargin: 3.0,
                         scaleNodes: 1.0,
@@ -192,7 +203,7 @@ html
                     };
 
                     // Configure the algorithm
-                    var listener = graph2.configNoverlap(config);
+                    var listener = s.configNoverlap(config);
 
                     // Bind all events:
                     listener.bind('start', function (event) {
@@ -200,4 +211,6 @@ html
                     });
 
                     // Start the algorithm:
-                    graph2.startNoverlap();
+                    s.startNoverlap();
+                    s.refresh();
+            a(href='http://localhost:3000/data/followGraph.json' download='followGraph') Télécharger le graph au format JSON
