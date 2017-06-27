@@ -72,4 +72,5 @@ function simulate(listeBots, nbTours) {
             }
     }
     console.log(log.listeLogs.length);
+    console.log(listeBots.length);
 }
